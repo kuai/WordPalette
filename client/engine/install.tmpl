@@ -1,0 +1,47 @@
+<tmpl id="main">
+	<div>
+		<h1>`Install WordPalette`</h1>
+		<div class="subtitle">`Thanks for choosing WordPalette. Finish following settings to make it run.`</div>
+		<hr>
+		<form action="/engine/install" method="" id="install">
+			<div>
+				<label for="enginePassword">`Engine Password`</label>
+				<input type="password" id="enginePassword" name="enginePassword" required placeholder="`TOP SECRET!`">
+				<input type="password" id="enginePasswordRe" required placeholder="`Retype...`">
+			</div>
+			<hr>
+			<div>
+				<label for="dbHost">`Database Server Address`</label>
+				<input type="text" id="dbHost" name="dbHost" value="localhost" required>
+			</div>
+			<div>
+				<label for="dbPort">`Database Server Port`</label>
+				<input type="text" id="dbPort" name="dbPort" value="27017" required>
+			</div>
+			<div>
+				<label for="dbName">`Database Name`</label>
+				<input type="text" id="dbName" name="dbName" value="wordpalette" required>
+			</div>
+			<div>
+				<label for="dbUser">`Database Username`</label>
+				<input type="text" id="dbUser" name="dbUser" value="wordpalette" required>
+			</div>
+			<div>
+				<label for="dbPassword">`Database Password`</label>
+				<input type="password" id="dbPassword" name="dbPassword" required>
+			</div>
+			<hr>
+			<div id="error"></div>
+			<input type="submit" id="submit" value="`Continue Installation`">
+		</form>
+	</div>
+</tmpl>
+
+<tmpl id="error">
+	{{#if db}}`Connect to database failed. Please check your database configuration.`{{/if}}
+	{{#if writeFile}}`Cannot write settings to "wordpalette.json". You may write it manually.`{{/if}}
+</tmpl>
+
+<tmpl id="timeout">
+	`Connection timeout. Please check your network.`
+</tmpl>

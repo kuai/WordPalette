@@ -1,0 +1,49 @@
+/* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
+
+body
+	margin 0
+	background #ddd
+#engine
+	width 400px
+	margin 100px auto
+	border-radius 30px
+	padding 20px
+	background #fff
+#engine h1
+	text-align center
+	font-size 1.5em
+	color #444
+#engine .subtitle
+	text-align center
+	color #888
+#engine form
+	text-align center
+	color #666
+#engine form div
+	margin 20px
+#engine hr
+	margin 20px 0
+	border 1px 0 0
+	border-color #eee
+	box-shadow 0 0 0.2em #eee
+#engine label
+	font-size 1.2em
+	margin 5px 0
+	display block
+#engine input
+	text-align center
+	font-size 1em
+	display block
+	width 350px
+	margin 5px 0
+	padding 4px
+	background #eee
+	border 1px solid #ddd
+#engine #submit
+	border-radius 100px
+	margin 25px auto 0
+	width auto
+	padding 0.25em 1em
+	font-size 1.2em
+#engine #error
+	color red

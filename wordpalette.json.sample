@@ -1,0 +1,9 @@
+{
+	"enginePassword": "THIS IS THE ENGINE ADMIN PASSWORD",
+	"dbHost":         "localhost",
+	"dbPort":         27017,
+	"dbName":         "THIS IS DATABASE NAME",
+	"dbUser":         "THIS IS DATABASE USERNAME",
+	"dbPassword":     "THIS IS DATABASE PASSWORD",
+	"secret":         "THIS IS A LONG AND SECRET STRING",
+}

@@ -1,0 +1,16 @@
+{
+	"Install WordPalette": "安装 WordPalette",
+	"Thanks for choosing WordPalette. Finish following settings to make it run.": "感谢选用WordPalette。在运行前，请完成下列设置。",
+	"Engine Password": "引擎密码",
+	"TOP SECRET!": "务必认真保密！",
+	"Retype...": "再输入一次……",
+	"Database Server Address": "数据库服务器地址",
+	"Database Server Port": "数据库服务器端口号",
+	"Database Name": "数据库名",
+	"Database Username": "数据库用户名",
+	"Database Password": "数据库密码",
+	"Continue Installation": "继续安装",
+	"Connect to database failed. Please check your database configuration.": "连接数据库失败，请检查数据库设置。",
+	"Connection timeout. Please check your network.": "连接超时，请检查你的网络状况。",
+	"Cannot write settings to \"wordpalette.json\". You may write it manually.": "无法将设置写入wordpalette.json。请手动创建并编写它。"
+}
