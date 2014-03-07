@@ -2,6 +2,7 @@
 'use strict';
 
 module.exports = function(next){
+	// formFilter: filter args to match pattern, including the data type, pattern value as default.
 	fw.formFilter = function(args, pattern){
 		var res = {};
 		for(var k in pattern) {

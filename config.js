@@ -8,7 +8,7 @@ var config = {};
 try {
 	var config = JSON.parse(fs.readFileSync('wordpalette.json').toString('utf8'));
 } catch(e) {}
-var configExists = !!config.enginePassword;
+var configExists = !!config.secret;
 
 module.exports = {
 	app: {

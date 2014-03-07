@@ -8,14 +8,14 @@ var mongodb = require('fw.mpa/node_modules/mongoose/node_modules/mongodb');
 var tryDb = function(args, next){
 	var writePwd = function(db){
 		db.createCollection('wp', function(err, res){
-			if(err) next(true);
-			res.insert({
-				key: 'enginePassword',
-				value: fw.password.hash(args.enginePassword, args.secret),
-			}, function(err){
-				if(err) next(true);
-				db.close();
-				next();
+			if(err) return next(true);
+			fw.password.hash(args.enginePassword, function(err, auth){
+				if(err) return next(true);
+				res.update({_id: 'enginePassword'}, {_id: 'enginePassword', v: auth}, {upsert: true}, function(err){
+					if(err) return next(true);
+					db.close();
+					next();
+				});
 			});
 		});
 	};
@@ -24,7 +24,7 @@ var tryDb = function(args, next){
 		if(err) return next(true);
 		if(args.dbUser)
 			db.authenticate(args.dbUser, args.dbPassword, function(err, res){
-				if(err || !res) next(true);
+				if(err || !res) return next(true);
 				writePwd(db);
 			});
 		else
