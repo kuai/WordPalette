@@ -4,7 +4,7 @@
 var crypto = require('crypto');
 
 module.exports = function(next){
-	fw.password = {
+	next({
 		// hash: generate auth string for str, cb(err, auth)
 		hash: function(str, cb){
 			crypto.randomBytes(24, function(err, res){
@@ -23,6 +23,5 @@ module.exports = function(next){
 			var salt = new Buffer(a[0], 'base64');
 			return (a[1] === crypto.createHmac('sha256', salt).update(str).digest('base64'));
 		}
-	};
-	next();
+	});
 };

@@ -12,5 +12,5 @@
 	"Continue Installation": "继续安装",
 	"Connect to database failed. Please check your database configuration.": "连接数据库失败，请检查数据库设置。",
 	"Connection timeout. Please check your network.": "连接超时，请检查你的网络状况。",
-	"Cannot write settings to \"wordpalette.json\". You may write it manually.": "无法将设置写入wordpalette.json。请手动创建并编写它。"
+	"Cannot write settings to \"config.json\". You may write it manually.": "config.json。请手动创建并编写它。"
 }

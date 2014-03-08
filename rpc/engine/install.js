@@ -4,12 +4,14 @@
 var fs = require('fs');
 var crypto = require('crypto');
 var mongodb = require('fw.mpa/node_modules/mongoose/node_modules/mongodb');
+var password = fw.module('password');
+var formFilter = fw.module('form_filter');
 
 var tryDb = function(args, next){
 	var writePwd = function(db){
 		db.createCollection('wp', function(err, res){
 			if(err) return next(true);
-			fw.password.hash(args.enginePassword, function(err, auth){
+			password.hash(args.enginePassword, function(err, auth){
 				if(err) return next(true);
 				res.update({_id: 'enginePassword'}, {_id: 'enginePassword', v: auth}, {upsert: true}, function(err){
 					if(err) return next(true);
@@ -33,7 +35,7 @@ var tryDb = function(args, next){
 };
 
 module.exports = function(conn, args, res){
-	args = fw.formFilter(args, {
+	args = formFilter(args, {
 		enginePassword: '',
 		dbHost:         'localhost',
 		dbPort:         27017,
@@ -43,10 +45,10 @@ module.exports = function(conn, args, res){
 	});
 	if(!args.enginePassword) return res({});
 	// check file existence
-	fs.exists('wordpalette.json', function(err, r){
+	fs.exists('config.json', function(err, r){
 		if(err || r) return res({writeFile: true});
 		// get random bytes
-		crypto.randomBytes(48, function(err, buf){
+		crypto.randomBytes(24, function(err, buf){
 			if(err) return res({writeFile: true});
 			args.secret = buf.toString('base64');
 			// try to connect to database server
@@ -54,7 +56,7 @@ module.exports = function(conn, args, res){
 				if(err) return res({db: true});
 				// write settings
 				delete args.enginePassword;
-				fs.writeFile('wordpalette.json', JSON.stringify(args), function(err){
+				fs.writeFile('config.json', JSON.stringify(args), function(err){
 					if(err) return res({writeFile: true});
 					res();
 					fw.restart();

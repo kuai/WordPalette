@@ -6,16 +6,16 @@ var models = [
 ];
 
 module.exports = function(next){
+	var model = {};
 	if(fw.db) {
-		fw.model = {};
 		var c = models.length;
 		var finished = function(){
 			c--;
-			if(!c) next();
+			if(!c) next(model);
 		};
 		while(models.length)
-			require('./'+models.shift())(fw.model, finished);
+			require('./'+models.shift())(model, finished);
 	} else {
-		next();
+		next(model);
 	}
 };

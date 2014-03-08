@@ -6,7 +6,7 @@ var fs = require('fs');
 // read config file
 var config = {};
 try {
-	var config = JSON.parse(fs.readFileSync('wordpalette.json').toString('utf8'));
+	var config = JSON.parse(fs.readFileSync('config.json').toString('utf8'));
 } catch(e) {}
 var configExists = !!config.secret;
 
