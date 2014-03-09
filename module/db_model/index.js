@@ -3,6 +3,7 @@
 
 var models = [
 	'site.js',
+	'engine_settings.js',
 ];
 
 module.exports = function(next){

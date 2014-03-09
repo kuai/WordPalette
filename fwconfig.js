@@ -14,7 +14,7 @@ module.exports = {
 	app: {
 		title: 'WordPalette',
 		version: new Date().getTime(),
-		locale: ['zh'],
+		locale: ['zh_CN'],
 	},
 	server: {
 		port: 1180,

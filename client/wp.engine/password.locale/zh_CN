@@ -1,0 +1,12 @@
+{
+	"Modify Engine Password": "修改引擎密码",
+	"Your engine password is not set.": "引擎密码尚未设置。",
+	"Original Password": "原密码",
+	"New Password": "新密码",
+	"TOP SECRET!": "务必认真保密！",
+	"Retype...": "再输入一次……",
+	"Modify Password": "修改密码",
+	"Original password is not correct.": "原密码不正确",
+	"Operation failed.": "操作失败",
+	"Connection timeout. Please check your network.": "连接超时，请检查你的网络状况。"
+}
