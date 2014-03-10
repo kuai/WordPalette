@@ -39,11 +39,13 @@ body
 	padding 4px
 	background #eee
 	border 1px solid #ddd
-#engine #submit
+#engine .button, #engine #submit
 	border-radius 100px
 	margin 25px auto 0
 	width auto
 	padding 0.25em 1em
+	font-size 1.1em
+#engine #submit
 	font-size 1.2em
 #engine #error
 	color red

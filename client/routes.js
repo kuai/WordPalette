@@ -25,7 +25,7 @@ if(!fw.db) {
 			reload: 'both',
 		},
 		'/': {
-			redirect: './wp.engine',
+			redirect: './wp.engine/',
 		},
 	};
 } else {

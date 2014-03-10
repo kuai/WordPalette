@@ -5,14 +5,14 @@ var password = fw.module('password');
 var formFilter = fw.module('form_filter');
 var settings = fw.module('db_model').EngineSettings;
 
-var exists = exports.exists = function(conn, args, res){
+exports.exists = function(conn, res, args){
 	settings.get('enginePassword', function(err, r){
 		if(err) res(true);
 		else res(!!r);
 	});
 };
 
-exports.modify = function(conn, args, res){
+exports.modify = function(conn, res, args){
 	args = formFilter(args, {
 		originalPassword: '',
 		enginePassword:   '',

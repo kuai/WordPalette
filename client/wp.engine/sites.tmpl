@@ -1,0 +1,65 @@
+<tmpl id="main">
+	<div>
+		<h1>`Engine Sites Settings`</h1>
+		<div class="subtitle">`Applying new settings will restart your server program.`</div>
+		<hr>
+		<form action="sites" method="set" id="settings">
+			<div id="sites">{{#each sites}}
+				<div>
+					<label>{{@key}}</label>
+					<textarea type="text" name="{{@key}}" required placeholder="`Input domains here, seperated by spaces...`">{{#each domain}}{{this}} {{/each}}</textarea>
+					<input type="button" class="button" id="removeSite-{{@key}}" value="`Remove This Site`">
+				</div>
+				<hr>
+			{{/each}}</div>
+			<div>
+				<label for="newSiteName">`Name of a New Site`</label>
+				<input type="text" id="newSiteName" placeholder="`letters, numbers, and underline`">
+				<input type="button" class="button" id="newSite" value="`Create Site`">
+			</div>
+			<hr>
+			<div>
+				<label for="enginePassword">`Enter Password to Confirm`</label>
+				<input type="password" id="enginePassword" name="_enginePassword" required>
+			</div>
+			<div id="error"></div>
+			<input type="submit" id="submit" value="`Apply Changes`">
+		</form>
+	</div>
+</tmpl>
+
+<tmpl id="newSite">
+	<label>{{this}}</label>
+	<textarea type="text" name="{{this}}" required placeholder="`Input domains here, seperated by spaces...`"></textarea>
+	<input type="button" class="button" id="removeSite-{{this}}" value="`Remove This Site`">
+</tmpl>
+
+<tmpl id="removeSite">
+	<label>`Will be removed...`</label>
+</tmpl>
+
+<tmpl id="login">
+	<div>
+		<h1>`Engine Sites Settings`</h1>
+		<form action="sites" method="get" id="settings">
+			<div>
+				<label for="enginePassword">`Engine Password`</label>
+				<input type="password" id="enginePassword" name="_enginePassword" required>
+			</div>
+			<div id="error"></div>
+			<input type="submit" id="submit" value="`Continue`">
+		</form>
+	</div>
+</tmpl>
+
+<tmpl id="error">
+	{{#if pwd}}
+		`Engine password is not correct.`
+	{{else}}
+		`Operation failed.`
+	{{/if}}
+</tmpl>
+
+<tmpl id="timeout">
+	`Connection timeout. Please check your network.`
+</tmpl>

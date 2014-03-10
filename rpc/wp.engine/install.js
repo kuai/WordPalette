@@ -34,7 +34,7 @@ var tryDb = function(args, next){
 	});
 };
 
-module.exports = function(conn, args, res){
+module.exports = function(conn, res, args){
 	args = formFilter(args, {
 		enginePassword: '',
 		dbHost:         'localhost',

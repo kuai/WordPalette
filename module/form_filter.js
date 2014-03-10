@@ -5,6 +5,7 @@ module.exports = function(next){
 	// formFilter: filter args to match pattern, including the data type, pattern value as default.
 	next(function(args, pattern){
 		var res = {};
+		if(!args) args = {};
 		for(var k in pattern) {
 			if(typeof(args[k]) === 'undefined') {
 				res[k] = pattern[k];

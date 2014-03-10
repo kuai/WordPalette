@@ -7,12 +7,9 @@ module.exports = {
 		main: 'password',
 		tmpl: 'password',
 	},
-	'./sites': {
+	'./': {
 		parent: 'engine',
 		main: 'sites',
 		tmpl: 'sites',
-	},
-	'./': {
-		redirect: './password',
 	},
 };
