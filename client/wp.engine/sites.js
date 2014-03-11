@@ -5,26 +5,29 @@ var pg = fw.getPage();
 var tmpl = pg.tmpl;
 
 var showMain = function(res){
-	document.getElementById('engine').innerHTML = tmpl.main(res);
+	$('#engine').html(tmpl.main(res));
 	// new
-	document.getElementById('newSite').onclick = function(){
-		var name = document.getElementById('newSiteName');
-		if(!name.value.match(/^\w+$/)) {
-			name.value = '';
-			name.focus();
+	$('#newSite').on('click', function(){
+		var $name = $('#newSiteName');
+		var val = $name.val();
+		if(!val.match(/^\w+$/) || $('#settings [name='+val+']').length) {
+			$name.val('').focus();
 			return;
 		}
-		var div = document.createElement('div');
-		div.innerHTML = tmpl.newSite(name.value);
-		document.getElementById('sites').appendChild(div);
-		document.getElementById('sites').appendChild(document.createElement('hr'));
-		document.getElementById('removeSite-'+name.value).onclick = function(){
-			this.parentElement.innerHTML = tmpl.removeSite();
-		};
-		name.value = '';
-	};
+		$(tmpl.newSite(val)).insertBefore('#newSiteSection').hide().slideDown(200);
+		$name.val('');
+	});
 	// delete
-	// TODO
+	$('#settings').on('click', '.removeSite', function(){
+		$(this).closest('.siteSection')
+			.slideUp(200, function(){
+				$(this).remove();
+			});
+	});
+	// discard
+	$('#discard').on('click', function(){
+		showMain(res);
+	});
 	// form
 	bindSettings(function(){
 		pg.on('socketConnect', function(){
@@ -35,23 +38,26 @@ var showMain = function(res){
 };
 
 var bindSettings = function(cb){
-	pg.form(document.getElementById('settings'), function(){
-		document.getElementById('error').innerHTML = '';
-		document.getElementById('submit').disabled = true;
+	pg.form($('#settings')[0], function(){
+		$('#error').html('');
+		$('#submit').prop('disabled', true);
 	}, function(err, res){
 		if(!err) return cb(res);
-		document.getElementById('submit').disabled = false;
-		document.getElementById('error').innerHTML = tmpl.error(err);
+		$('#error').html(tmpl.error(err));
+		$('#submit').prop('disabled', false);
 	}, function(){
-		document.getElementById('submit').disabled = false;
-		document.getElementById('error').innerHTML = tmpl.timeout();
+		$('#error').html(tmpl.timeout());
+		$('#submit').prop('disabled', false);
 	});
 };
 
 pg.on('load', function(){
 	pg.rpc('password:exists', null, function(res){
 		if(!res) return fw.go('/wp.engine/password');
-		document.getElementById('engine').innerHTML = tmpl.login();
+		$('#engine').html(tmpl.login());
+		$('#modifyPassword').on('click', function(){
+			fw.go('/wp.engine/password');
+		});
 		bindSettings(function(res){
 			showMain(res);
 		});

@@ -5,15 +5,14 @@ var pg = fw.getPage();
 var tmpl = pg.tmpl;
 
 pg.on('load', function(){
-	document.getElementById('engine').innerHTML = tmpl.main();
-	pg.form(document.getElementById('install'), function(){
-		if(document.getElementById('enginePassword').value !== document.getElementById('enginePasswordRe').value) {
-			document.getElementById('enginePasswordRe').value = '';
-			document.getElementById('enginePasswordRe').focus();
+	$('#engine').html(tmpl.main());
+	pg.form($('#install')[0], function(){
+		if($('#enginePassword').val() !== $('#enginePasswordRe').val()) {
+			$('#enginePasswordRe').val('').focus();
 			return false;
 		}
-		document.getElementById('error').innerHTML = '';
-		document.getElementById('submit').disabled = true;
+		$('#error').html('');
+		$('#submit').prop('disabled', true);
 	}, function(err){
 		if(!err) {
 			pg.on('socketConnect', function(){
@@ -21,10 +20,10 @@ pg.on('load', function(){
 			});
 			return;
 		}
-		document.getElementById('submit').disabled = false;
-		document.getElementById('error').innerHTML = tmpl.error(err);
+		$('#submit').prop('disabled', false);
+		$('#error').html(tmpl.error(err));
 	}, function(){
-		document.getElementById('submit').disabled = false;
-		document.getElementById('error').innerHTML = tmpl.timeout();
+		$('#submit').prop('disabled', false);
+		$('#error').html(tmpl.timeout());
 	});
 });

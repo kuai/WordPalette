@@ -30,7 +30,7 @@ body
 	font-size 1.2em
 	margin 5px 0
 	display block
-#engine input
+#engine input, #engine textarea
 	text-align center
 	font-size 1em
 	display block

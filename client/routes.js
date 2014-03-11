@@ -3,47 +3,25 @@
 
 var site = fw.module('db_model').Site;
 
+exports.global = {
+	lib: ['lib/jquery.js', 'lib/crypto.js'],
+};
+
 if(!fw.db) {
 	// for installation
-	module.exports = {
-		engine: {
-			main: 'wp.engine/main',
-			style: 'wp.engine/main',
-			reload: 'both',
-		},
-		'/': {
-			parent: 'engine',
-			main: 'wp.engine/install',
-			tmpl: 'wp.engine/install',
-		},
+	exports['*'] = {
+		redirect: './wp.engine/install',
 	};
 } else if(site.cachedCount) {
-	module.exports = {
-		engine: {
-			main: 'wp.engine/main',
-			style: 'wp.engine/main',
-			reload: 'both',
-		},
-		'/': {
-			redirect: './wp.engine/',
-		},
+	// no sites
+	exports['*'] = {
+		redirect: './wp.engine/',
 	};
 } else {
 	// common
-	module.exports = {
-		engine: {
-			main: 'wp.engine/main',
-			style: 'wp.engine/main',
-			reload: 'both',
-		},
-		wordpalette: {
-			main: 'wordpalette',
-			reload: 'both',
-		},
-		'/': {
-			parent: 'wordpalette',
-			main: 'index',
-			render: 'index',
-		},
+	exports['/'] = {
+		parent: 'global',
+		main: 'index',
+		render: 'index',
 	};
 };

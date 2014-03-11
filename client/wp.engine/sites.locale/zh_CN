@@ -8,9 +8,10 @@
 	"Create Site": "创建站点",
 	"Enter Password to Confirm": "为确认操作，请输入引擎密码",
 	"Apply Changes": "应用更改",
-	"Will be removed...": "即将删除……",
+	"Reload Site Settings": "重新读取设置",
 	"Engine Password": "引擎密码",
 	"Continue": "继续",
+	"Modify Password": "修改密码",
 	"Engine password is not correct.": "引擎密码不正确",
 	"Operation failed.": "操作失败",
 	"Connection timeout. Please check your network.": "连接超时，请检查你的网络状况。"

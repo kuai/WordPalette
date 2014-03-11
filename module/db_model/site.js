@@ -6,7 +6,7 @@ var COLLECTION = 'wp._site';
 // define schema
 var Schema = fw.db.Schema;
 var schemaObj = {
-	domain: { type: [String], index: true },
+	domain: { type: [String], index: true, default: [] },
 	_id: String,
 };
 var schema = new Schema(schemaObj, {autoIndex: false});
@@ -60,8 +60,8 @@ module.exports = function(model, next){
 		model.Site.find({}, function(err, res){
 			if(err) throw(err);
 			for(var i=0; i<res.length; i++) {
-				var id = res._id;
-				var domain = res.domain;
+				var id = res[i]._id;
+				var domain = res[i].domain;
 				for(var j=0; j<domain.length; j++)
 					listCache[domain[j]] = id;
 				listCount += domain.length;

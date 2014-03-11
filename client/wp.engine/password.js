@@ -6,25 +6,24 @@ var tmpl = pg.tmpl;
 
 pg.on('load', function(){
 	pg.rpc('password:exists', null, function(res){
-		document.getElementById('engine').innerHTML = tmpl.main({originalPassword: res});
+		$('#engine').html(tmpl.main({originalPassword: res}));
 		pg.form(document.getElementById('password'), function(){
-			if(document.getElementById('enginePassword').value !== document.getElementById('enginePasswordRe').value) {
-				document.getElementById('enginePasswordRe').value = '';
-				document.getElementById('enginePasswordRe').focus();
+			if($('#enginePassword').val() !== $('#enginePasswordRe').val()) {
+				$('#enginePasswordRe').val('').focus();
 				return false;
 			}
-			document.getElementById('error').innerHTML = '';
-			document.getElementById('submit').disabled = true;
+			$('#error').html('');
+			$('#submit').prop('disabled', true);
 		}, function(err){
 			if(!err) {
 				fw.go('/wp.engine/');
 				return;
 			}
-			document.getElementById('submit').disabled = false;
-			document.getElementById('error').innerHTML = tmpl.error(err);
+			$('#submit').prop('disabled', false);
+			$('#error').html(tmpl.error(err));
 		}, function(){
-			document.getElementById('submit').disabled = false;
-			document.getElementById('error').innerHTML = tmpl.timeout();
+			$('#submit').prop('disabled', false);
+			$('#error').html(tmpl.timeout());
 		});
 	});
 });
