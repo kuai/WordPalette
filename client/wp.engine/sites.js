@@ -50,7 +50,7 @@ var bindSettings = function(cb){
 
 pg.on('load', function(){
 	pg.rpc('password:exists', null, function(res){
-		if(!res) return fw.go('/engine/password');
+		if(!res) return fw.go('/wp.engine/password');
 		document.getElementById('engine').innerHTML = tmpl.login();
 		bindSettings(function(res){
 			showMain(res);

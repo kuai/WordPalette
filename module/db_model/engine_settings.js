@@ -15,7 +15,7 @@ var schema = new Schema(schemaObj, {autoIndex: false});
 schema.statics.get = function(key, cb){
 	this.findOne({_id: key}, function(err, res){
 		if(err) cb(err);
-		else cb(null, res.v);
+		else cb(null, res && res.v);
 	});
 };
 schema.statics.set = function(key, value, cb){

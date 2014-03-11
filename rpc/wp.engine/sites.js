@@ -26,9 +26,9 @@ exports.set = function(conn, res, args){
 	if(!enginePassword) enginePassword = '';
 	else delete args._enginePassword;
 	settings.get('enginePassword', function(err, r){
-		if(err || !r) return res({err: {db: true}});
+		if(err || !r) return res({db: true});
 		if(!password.check(enginePassword, r))
-			return res({err: {pwd: true}});
+			return res({pwd: true});
 		var list = {};
 		for(var k in args) {
 			if(!k.match(/^\w$/)) continue;
