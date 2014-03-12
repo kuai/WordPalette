@@ -1,6 +1,7 @@
 // Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT
 'use strict';
 
+var crypto = require('crypto');
 var password = fw.module('password');
 var formFilter = fw.module('form_filter');
 var settings = fw.module('db_model').EngineSettings;

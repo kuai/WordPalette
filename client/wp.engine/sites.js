@@ -39,6 +39,9 @@ var showMain = function(res){
 
 var bindSettings = function(cb){
 	pg.form($('#settings')[0], function(){
+		$('#settings').find('[name=-enginePassword]').val(
+			CryptoJS.SHA256($('#enginePassword').val()).toString()
+		);
 		$('#error').html('');
 		$('#submit').prop('disabled', true);
 	}, function(err, res){

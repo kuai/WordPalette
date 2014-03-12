@@ -6,7 +6,8 @@
 		<form action="/wp.engine/install" method="" id="install">
 			<div>
 				<label for="enginePassword">`Engine Password`</label>
-				<input type="password" id="enginePassword" name="enginePassword" required placeholder="`TOP SECRET!`">
+				<input type="hidden" name="enginePassword">
+				<input type="password" id="enginePassword" required placeholder="`TOP SECRET!`">
 				<input type="password" id="enginePasswordRe" required placeholder="`Retype...`">
 			</div>
 			<hr>

@@ -24,7 +24,8 @@
 			<hr>
 			<div>
 				<label for="enginePassword">`Enter Password to Confirm`</label>
-				<input type="password" id="enginePassword" name="_enginePassword" required>
+				<input type="hidden" name="-enginePassword">
+				<input type="password" id="enginePassword" required>
 			</div>
 			<div id="error"></div>
 			<input type="submit" id="submit" value="`Apply Changes`">
@@ -47,7 +48,8 @@
 		<form action="sites" method="get" id="settings">
 			<div>
 				<label for="enginePassword">`Engine Password`</label>
-				<input type="password" id="enginePassword" name="_enginePassword" required>
+				<input type="hidden" name="-enginePassword">
+				<input type="password" id="enginePassword" required>
 			</div>
 			<div id="error"></div>
 			<input type="submit" id="submit" value="`Continue`">

@@ -8,11 +8,11 @@ var site = fw.module('db_model').Site;
 
 exports.get = function(conn, res, args){
 	args = formFilter(args, {
-		_enginePassword: '',
+		'-enginePassword': '',
 	});
 	settings.get('enginePassword', function(err, r){
 		if(err || !r) return res({db: true});
-		if(!password.check(args._enginePassword, r))
+		if(!password.check(args['-enginePassword'], r))
 			return res({pwd: true});
 		site.getList(function(err, r){
 			if(err) return res({db: true});
@@ -22,7 +22,7 @@ exports.get = function(conn, res, args){
 };
 
 exports.set = function(conn, res, args){
-	var enginePassword = args && args._enginePassword;
+	var enginePassword = args && args['-enginePassword'];
 	if(!enginePassword) enginePassword = '';
 	else delete args._enginePassword;
 	settings.get('enginePassword', function(err, r){
@@ -38,6 +38,7 @@ exports.set = function(conn, res, args){
 		site.setList(list, function(err){
 			if(err) return res({db: true});
 			res();
+			fw.restart();
 		});
 	});
 };

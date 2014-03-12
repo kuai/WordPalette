@@ -31,5 +31,5 @@ if(fw.db) {
 			main: 'install',
 			tmpl: 'install',
 		},
-	}
+	};
 }

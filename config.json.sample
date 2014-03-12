@@ -4,5 +4,5 @@
 	"dbName":         "THIS IS DATABASE NAME",
 	"dbUser":         "THIS IS DATABASE USERNAME",
 	"dbPassword":     "THIS IS DATABASE PASSWORD",
-	"secret":         "THIS IS A LONG AND SECRET STRING",
+	"secret":         "THIS IS A LONG AND SECRET BASE64 STRING",
 }

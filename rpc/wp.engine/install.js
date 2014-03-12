@@ -13,7 +13,7 @@ var tryDb = function(args, next){
 			if(err) return next(true);
 			password.hash(args.enginePassword, function(err, auth){
 				if(err) return next(true);
-				res.update({_id: 'enginePassword'}, {v: auth}, {upsert: true}, function(err){
+				res.update({_id: 'enginePassword'}, {_id: 'enginePassword', v: auth}, {upsert: true}, function(err){
 					if(err) return next(true);
 					db.close();
 					next();
