@@ -2,8 +2,12 @@
 'use strict';
 
 var models = [
-	'site.js',
 	'engine_settings.js',
+	'site.js',
+	//'settings.js',
+	//'user.js',
+	//'post.js',
+	//'comment.js'
 ];
 
 module.exports = function(next){

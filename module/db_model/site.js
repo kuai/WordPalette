@@ -32,16 +32,19 @@ schema.statics.setList = function(list, cb){
 			return;
 		}
 		var c = 0;
+		for(var k in list) c++;
 		var done = function(){
 			c--;
 			if(!c) cb();
 		};
-		for(var k in list) c++;
-		for(var k in list)
-			new Site({
-				_id: k,
-				domain: list[k],
-			}).save(done);
+		if(!c)
+			cb();
+		else
+			for(var k in list)
+				new Site({
+					_id: k,
+					domain: list[k],
+				}).save(done);
 	});
 };
 var listCache = {};

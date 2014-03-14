@@ -9,6 +9,8 @@ var schemaObj = {
 };
 var schema = new Schema(schemaObj, {autoIndex: false});
 
+// TODO
+/*
 // functions
 schema.statics.get = function(key, cb){
 	this.findOne({_id: key}, function(err, res){
@@ -40,3 +42,4 @@ module.exports = function(model, next){
 	model.EngineSettings = fw.db.model(COLLECTION, schema);
 	model.EngineSettings.ensureIndexes(next);
 };
+*/
