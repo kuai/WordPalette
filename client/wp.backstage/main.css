@@ -1,0 +1,87 @@
+/* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
+
+body {
+    background: #ddd;
+}
+
+#header {
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    right: 0;
+    top: 0;
+	background: #444;
+	line-height: 32px;
+    height: 32px;
+    padding: 2px 20px;
+    box-shadow: 0 0 5px #444;
+}
+#header img {
+    vertical-align: middle;
+}
+.header_left {
+    float: left;
+    color: #00d2ff;
+    font-weight: bold;
+}
+.header_right {
+    float: right;
+    font-size: 14px;
+    color: #bbb;
+}
+
+#tabs {
+    position: fixed;
+    z-index: 1000;
+    top: 36px;
+    left: 0;
+    bottom: 0;
+    padding: 0.5em 0 0 10px;
+    width: 160px;
+    height: 9999px;
+    background: #444;
+    font-weight: bold;
+    box-shadow: 0 0 5px #444;
+}
+.tab_sep {
+    height: 0.5em;
+}
+.tab {
+    padding: 0.5em 10px 0.5em 15px;
+    margin: 0.5em 0;
+    color: #00d2ff;
+    border-top-left-radius: 10em;
+    border-bottom-left-radius: 10em;
+}
+.tab:hover, .tab:active {
+    background: #666;
+}
+.tab_current {
+    color: #444;
+    text-shadow: 0 0 0.5px #444;
+    background: #ddd;
+    margin-right: -6px;
+    padding-right: 16px;
+    box-shadow: 0 0 4px #ddd;
+}
+.tab_current:hover, .tab_current:active {
+    background: #ddd;
+}
+
+#content_wrapper {
+    padding: 46px 10px 10px 180px;
+    
+}
+#content {
+    position: relative;
+}
+#backstage_busy {
+    position: fixed;
+    margin: auto;
+    top: 46px;;
+    bottom: 0;
+    left: 180px;
+    right: 0;
+    width: 256px;
+    height: 256px;
+}

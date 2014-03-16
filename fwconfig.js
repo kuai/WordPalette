@@ -1,6 +1,8 @@
 // Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT
 'use strict';
 
+var WP_VERSION = '0.0.1';
+
 var fs = require('fs');
 
 // read config file
@@ -13,7 +15,7 @@ var configExists = !!config.secret;
 module.exports = {
 	app: {
 		title: 'WordPalette',
-		version: new Date().getTime(),
+		version: WP_VERSION+'~'+new Date().getTime(),
 		locale: ['zh_CN'],
 	},
 	server: {

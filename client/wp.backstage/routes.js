@@ -6,22 +6,32 @@ if(fw.db) {
 		backstage: {
 			parent: 'global',
 			main: 'main',
-			style: 'main',
+			tmpl: 'main',
+			style: 'main.css',
 		},
 		'./': {
+			redirect: 'home',
+		},
+		'./home': {
 			parent: 'backstage',
-			main: 'index',
-			tmpl: 'index',
+			main: 'home',
+			tmpl: 'home',
+			style: 'home.css',
 		},
 		'./posts': {
 			parent: 'backstage',
 			main: 'posts',
 			tmpl: 'posts',
 		},
+		'./post': {
+			parent: 'backstage',
+			main: 'create',
+			tmpl: 'create',
+		},
 		'./post/:id': {
 			parent: 'backstage',
-			main: 'post',
-			tmpl: 'post',
+			main: 'edit',
+			tmpl: 'edit',
 		},
 		'./comments': {
 			parent: 'backstage',

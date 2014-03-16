@@ -1,0 +1,13 @@
+/* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
+
+.home {
+    text-align: center;
+}
+.home .title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.home .subtitle {
+    font-size: 0.8em;
+    color: #666;
+}
