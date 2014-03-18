@@ -5,6 +5,7 @@ if(fw.db) {
 	module.exports = {
 		backstage: {
 			parent: 'global',
+			lib: 'table_builder',
 			main: 'main',
 			tmpl: 'main',
 			style: 'main.css',

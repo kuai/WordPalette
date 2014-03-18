@@ -10,8 +10,8 @@ body {
     left: 0;
     right: 0;
     top: 0;
-	background: #444;
-	line-height: 32px;
+    background: #444;
+    line-height: 32px;
     height: 32px;
     padding: 2px 20px;
     box-shadow: 0 0 5px #444;
@@ -69,10 +69,11 @@ body {
 }
 
 #content_wrapper {
-    padding: 46px 10px 10px 180px;
-    
+    margin: 36px 0 0 170px;
+    overflow: auto;
 }
 #content {
+    padding: 20px;
     position: relative;
 }
 #backstage_busy {
@@ -84,4 +85,73 @@ body {
     right: 0;
     width: 256px;
     height: 256px;
+}
+
+/* table */
+.wp_table {
+    width: 100%;
+}
+.wp_table th, .wp_table td {
+    text-align: left;
+    min-width: 10%;
+    padding: 5px;
+}
+.wp_table thead tr, .wp_table tfoot tr {
+    background: #444;
+    box-shadow: 0 0 5px #444;
+}
+.wp_table thead th, .wp_table tfoot th {
+    color: #ddd;
+}
+.wp_table_row td {
+    padding-top: 7px;
+    padding-bottom: 1px;
+}
+.wp_table_extra td {
+    padding-top: 1px;
+    padding-bottom: 7px;
+    color: #666;
+    font-size: 0.9em;
+}
+.wp_table tbody tr:nth-child(4n+1), .wp_table tbody tr:nth-child(4n+2) {
+    background: #eee;
+}
+.wp_table tbody tr:nth-child(odd):hover td, .wp_table tbody tr:nth-child(odd):hover + tr td {
+    color: #007387;
+    text-shadow: 0 0 1px #00d2ff;
+}
+.wp_table tbody input, .wp_table tbody select, .wp_table tbody textarea {
+    font-size: 1em;
+    line-height: auto;
+    border: 1px solid #888;
+    box-shadow: 0 0 2px #888;
+    padding: 1px;
+    margin: 0 -2px;
+    width: 100%;
+    background: transparent;
+}
+.wp_table tbody input:hover, .wp_table tbody select:hover, .wp_table tbody textarea:hover {
+    border: 1px solid #00d2ff;
+    box-shadow: 0 0 2px #00d2ff;
+}
+.wp_table_navi input {
+    background: #bbb;
+    color: #000;
+    font-weight: bold;
+    border: 0 none;
+    border-radius: 2px;
+    box-shadow: 0 0 5px #bbb;
+    vertical-align: middle;
+    font-size: 1em;
+    padding: 0.1em 0.5em;
+}
+.wp_table_navi input:hover, .wp_table_navi input:active {
+    background: #00d2ff;
+    box-shadow: 0 0 5px #00d2ff;
+}
+.wp_table_add {
+    float: left;
+}
+.wp_table_page {
+    float: right;
 }
