@@ -37,7 +37,7 @@ body {
     left: 0;
     bottom: 0;
     padding: 0.5em 0 0 10px;
-    width: 160px;
+    width: 140px;
     height: 9999px;
     background: #444;
     font-weight: bold;
@@ -69,7 +69,7 @@ body {
 }
 
 #content_wrapper {
-    margin: 36px 0 0 170px;
+    margin: 36px 0 0 150px;
     overflow: auto;
 }
 #content {
@@ -120,20 +120,6 @@ body {
     color: #007387;
     text-shadow: 0 0 1px #00d2ff;
 }
-.wp_table tbody input, .wp_table tbody select, .wp_table tbody textarea {
-    font-size: 1em;
-    line-height: auto;
-    border: 1px solid #888;
-    box-shadow: 0 0 2px #888;
-    padding: 1px;
-    margin: 0 -2px;
-    width: 100%;
-    background: transparent;
-}
-.wp_table tbody input:hover, .wp_table tbody select:hover, .wp_table tbody textarea:hover {
-    border: 1px solid #00d2ff;
-    box-shadow: 0 0 2px #00d2ff;
-}
 .wp_table_navi input {
     background: #bbb;
     color: #000;
@@ -141,7 +127,7 @@ body {
     border: 0 none;
     border-radius: 2px;
     box-shadow: 0 0 5px #bbb;
-    vertical-align: middle;
+    vertical-align: baseline;
     font-size: 1em;
     padding: 0.1em 0.5em;
 }
@@ -149,9 +135,51 @@ body {
     background: #00d2ff;
     box-shadow: 0 0 5px #00d2ff;
 }
-.wp_table_add {
+.wp_table_navi .wp_table_page_num {
+    background: transparent;
+    color: #ddd;
+    text-align: right;
+    border: 1px solid #666;
+    box-shadow: none;
+    padding: 0.1em;
+}
+.wp_table_navi .wp_table_page_num:hover, .wp_table_navi .wp_table_page_num:active {
+    background: transparent;
+    border: 1px solid #00d2ff;
+}
+.wp_table_action {
     float: left;
 }
 .wp_table_page {
+    float: right;
+}
+.wp_table tbody input, .wp_table tbody select, .wp_table tbody textarea {
+    font-size: 1em;
+    line-height: auto;
+    border: 1px solid #888;
+    border-radius: 0;
+    box-shadow: 0 0 2px #888;
+    padding: 2px;
+    margin: 0 -3px;
+    width: 100%;
+    background: transparent;
+}
+.wp_table .wp_table_edit_btn input {
+    background: #444;
+    color: #ddd;
+    font-weight: bold;
+    border: 0 none;
+    border-radius: 2px;
+    margin: 4px 5px 0 0;
+    padding: 0.25em 0.5em;
+    box-shadow: 0 0 5px #444;
+    font-size: 1em;
+    width: auto;
+}
+.wp_table .wp_table_edit_btn input:hover, .wp_table .wp_table_edit_btn input:active {
+    background: #007387;
+    box-shadow: 0 0 5px #007387;
+}
+.wp_table_edit_btn_right {
     float: right;
 }

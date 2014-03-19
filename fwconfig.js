@@ -17,6 +17,8 @@ module.exports = {
 		title: 'WordPalette',
 		version: WP_VERSION+'~'+new Date().getTime(),
 		locale: ['zh_CN'],
+		loadingLogo: 'logo.gif',
+		loadingLogoBackground: '#ddd',
 	},
 	server: {
 		port: 1180,

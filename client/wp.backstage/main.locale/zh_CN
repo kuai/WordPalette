@@ -1,0 +1,17 @@
+[{
+	"Hello, you are writing with WordPalette {{wpVersion}}": "您好，您正使用 WordPalette {{wpVersion}} 创作",
+	"Dashboard": "控制盘",
+	"Writing": "创作",
+	"Posts": "文章",
+	"Comments": "评论",
+	"Uploads": "上传",
+	"Users": "用户",
+	"Settings": "设置"
+},{
+	"Add": "添加",
+	"Save": "保存",
+	"Cancel": "取消",
+	"Remove": "删除",
+	"No, thanks.": "不要删除，谢谢。",
+	"Yes, remove!": "确认并删除它。"
+}]

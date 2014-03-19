@@ -3,6 +3,7 @@
 
 fw.main(function(pg){
 	var tmpl = pg.tmpl;
+	wp.tableBuilder.i18n = tmpl.i18n;
 
 	// create div structure
 	var wpVersion = fw.version;
