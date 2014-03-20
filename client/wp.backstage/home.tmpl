@@ -1,7 +1,65 @@
 <tmpl id="main">
 	<div class="home">
-		<div><img src="/~rc/logo.png" width="256" height="256"></div>
-		<div class="title">WordPalette</div>
-		<div class="subtitle">NOT ONLY WORDS</div>
+		<img class="gravatar">
+	</div>
+</tmpl>
+
+<tmpl id="login">
+	<div class="home">
+		<div class="folder">
+			<form action="user" method="login">
+				<div>
+					<lable>`Username`</label>
+					<input type="text" name="id" required>
+				</div>
+				<div>
+					<lable>`Password`</label>
+					<input type="hidden" name="password">
+					<input type="password" class="password" required>
+				</div>
+				<div>
+					<input type="submit" value="`Login`">
+				</div>
+			</form>
+		</div>
+		<div class="folder">
+			<form action="user" method="register">
+				<div>
+					<lable>`Username`</label>
+					<input type="text" name="id" required>
+				</div>
+				<div>
+					<lable>`Password`</label>
+					<input type="hidden" name="password">
+					<input type="password" class="password" required>
+				</div>
+				<div>
+					<lable>`Password (Retype)`</label>
+					<input type="password" class="passwordRe">
+				</div>
+				<div>
+					<lable>`Email`</label>
+					<input type="email" name="email" required>
+				</div>
+				<div>
+					<input type="submit" value="`register`">
+				</div>
+			</form>
+		</div>
+		<div class="folder">
+			<form action="user" method="forgetPassword">
+				<div>
+					<lable>`Username`</label>
+					<input type="text" name="id" required>
+				</div>
+				<div>
+					<lable>`Email`</label>
+					<input type="email" name="email" required>
+				</div>
+				<div>
+					<input type="submit" value="`Login`">
+				</div>
+			</form>
+		</div>
 	</div>
 </tmpl>

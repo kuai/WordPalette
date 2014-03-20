@@ -19,6 +19,11 @@ if(fw.db) {
 			tmpl: 'home',
 			style: 'home.css',
 		},
+		'./stat': {
+			parent: 'backstage',
+			main: 'stat',
+			tmpl: 'stat',
+		},
 		'./posts': {
 			parent: 'backstage',
 			main: 'posts',
@@ -29,7 +34,7 @@ if(fw.db) {
 			main: 'create',
 			tmpl: 'create',
 		},
-		'./post/:id': {
+		'./post/*': {
 			parent: 'backstage',
 			main: 'edit',
 			tmpl: 'edit',

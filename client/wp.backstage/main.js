@@ -8,20 +8,46 @@ fw.main(function(pg){
 	// create div structure
 	var wpVersion = fw.version;
 	if(wpVersion.indexOf('~') >= 0) wpVersion = wpVersion.slice(0, wpVersion.indexOf('~'));
-	var $backstage = $(tmpl.main({
-		wpVersion: wpVersion
-	})).appendTo(document.body);
+	var $backstage = $(tmpl.main()).appendTo(document.body);
 	$('#content').html(tmpl.busy());
 	// define page switch method
-	var $tabs = $backstage.find('#tabs');
+	var $tabbar = $backstage.find('#tabbar');
 	pg.on('childUnload', function(){
 		$('#content').html(tmpl.busy());
 	});
-	pg.on('childLoadStart', function(){
+	var showCurStyle = function(){
 		var path = fw.getPath().match(/^\/[^\/]+\/(\w+)/);
 		var tabId = path[1];
-		$tabs.find('.tab_current').removeClass('tab_current');
-		$tabs.find('.tab_'+tabId).addClass('tab_current');
-	});
+		$tabbar.find('.tab_current').removeClass('tab_current');
+		$tabbar.find('.tab_'+tabId).addClass('tab_current');
+	};
+	pg.on('childLoadStart', showCurStyle);
 
+	// capture the height of page
+	$(window).resize(function(){
+		$('#backstage').height(document.documentElement.clientHeight);
+	});
+	$('#backstage').height(document.documentElement.clientHeight);
+
+	// send an rpc to get the user's type
+	pg.rpc('user:current', function(info){
+		// show tabbar
+		if(info.type === 'admin') {
+			var html = tmpl.userTabs({ contrib: true, write: true, admin: true });
+		} else if(info.type === 'editor' || info.type === 'writer') {
+			var html = tmpl.userTabs({ contrib: true, write: true });
+		} else if(info.type === 'contributor') {
+			var html = tmpl.userTabs({ contrib: true });
+		} else {
+			var html = tmpl.userTabs();
+		}
+		$('#tabbar').html(html);
+		showCurStyle();
+		// show user bar
+		if(info.id)
+			$('.header_right').html(tmpl.userInfo(info));
+		// raise an event to notify child pages
+		pg.userInfo = info;
+		pg.emit('userInfoReady');
+	});
 });

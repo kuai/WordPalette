@@ -1,6 +1,7 @@
 [{
-	"Hello, you are writing with WordPalette {{wpVersion}}": "您好，您正使用 WordPalette {{wpVersion}} 创作",
+	"Hello {{displayName}}! You can <a fw href=\"/wp.backstage/home\">modify your infomation</a>, or <a fw href=\"javascript:wp.logout();\">logout</a>.": "您好，{{displayName}}！您可以<a fw href=\"/wp.backstage/home\">修改个人信息</a>，或者<a fw href=\"javascript:wp.logout();\">登出</a>。",
 	"Dashboard": "控制盘",
+	"Statistics": "统计",
 	"Writing": "创作",
 	"Posts": "文章",
 	"Comments": "评论",

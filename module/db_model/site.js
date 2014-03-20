@@ -62,13 +62,16 @@ module.exports = function(model, next){
 	model.Site.ensureIndexes(function(){
 		model.Site.find({}, function(err, res){
 			if(err) throw(err);
+			var siteList = [];
 			for(var i=0; i<res.length; i++) {
 				var id = res[i]._id;
+				siteList.push(id);
 				var domain = res[i].domain;
 				for(var j=0; j<domain.length; j++)
 					listCache[domain[j]] = id;
 				listCount += domain.length;
 			}
+			model.siteList = siteList;
 			next();
 		});
 	});

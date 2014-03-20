@@ -4,26 +4,46 @@
 			<div class="header_left">
 				<img src="/~rc/logo_32.png"> WordPalette
 			</div>
-			<div class="header_right">
-				`Hello, you are writing with WordPalette {{wpVersion}}`
-			</div>
+			<div class="header_right"></div>
 		</div>
-		<div id="tabs">
-			<div class="tab_sep"></div>
-			<a fw href="home"><div class="tab tab_home">`Dashboard`</div></a>
-			<div class="tab_sep"></div>
-			<a fw href="post"><div class="tab tab_post">`Writing`</div></a>
-			<a fw href="posts"><div class="tab tab_posts">`Posts`</div></a>
-			<a fw href="comments"><div class="tab tab_comments">`Comments`</div></a>
-			<a fw href="uploads"><div class="tab tab_uploads">`Uploads`</div></a>
-			<div class="tab_sep"></div>
-			<a fw href="users"><div class="tab tab_users">`Users`</div></a>
-			<a fw href="settings"><div class="tab tab_settings">`Settings`</div></a>
+		<div id="tabbar">
+			<div class="tabs">
+				<div class="tab_sep"></div>
+				<a fw href="/wp.backstage/home"><div class="tab tab_home">`Dashboard`</div></a>
+				<div class="tab_sep"></div>
+			</div>
 		</div>
 		<div id="content_wrapper">
 			<div id="content"></div>
 		</div>
 	</div>
+</tmpl>
+
+<tmpl id="userTabs">
+	<div class="tabs">
+		<div class="tab_sep"></div>
+		<a fw href="/wp.backstage/home"><div class="tab tab_home">`Dashboard`</div></a>
+		{{#if contrib}}
+			<a fw href="/wp.backstage/stat"><div class="tab tab_stat">`Statistics`</div></a>
+			<div class="tab_sep"></div>
+			<a fw href="/wp.backstage/post"><div class="tab tab_post">`Writing`</div></a>
+			<a fw href="/wp.backstage/posts"><div class="tab tab_posts">`Posts`</div></a>
+		{{/if}}
+		{{#if write}}
+			<a fw href="/wp.backstage/comments"><div class="tab tab_comments">`Comments`</div></a>
+			<a fw href="/wp.backstage/uploads"><div class="tab tab_uploads">`Uploads`</div></a>
+		{{/if}}
+		{{#if admin}}
+			<div class="tab_sep"></div>
+			<a fw href="/wp.backstage/users"><div class="tab tab_users">`Users`</div></a>
+			<a fw href="/wp.backstage/settings"><div class="tab tab_settings">`Settings`</div></a>
+		{{/if}}
+		<div class="tab_sep"></div>
+	</div>
+</tmpl>
+
+<tmpl id="userInfo">
+	`Hello {{displayName}}! You can <a fw href="/wp.backstage/home">modify your infomation</a>, or <a fw href="javascript:wp.logout();">logout</a>.`
 </tmpl>
 
 <tmpl id="busy">

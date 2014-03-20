@@ -31,7 +31,7 @@ exports.set = function(conn, res, args){
 			return res({pwd: true});
 		var list = {};
 		for(var k in args) {
-			if(!k.match(/^\w$/)) continue;
+			if(!k.match(/^\w+$/)) continue;
 			var domain = String(args[k]).match(/[\S]+/g);
 			list[k] = domain;
 		}

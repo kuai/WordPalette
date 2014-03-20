@@ -4,8 +4,8 @@
 var models = [
 	'engine_settings.js',
 	'site.js',
+	'user.js',
 	//'settings.js',
-	//'user.js',
 	//'post.js',
 	//'comment.js'
 ];
@@ -13,13 +13,14 @@ var models = [
 module.exports = function(next){
 	var model = {};
 	if(fw.db) {
-		var c = models.length;
-		var finished = function(){
-			c--;
-			if(!c) next(model);
+		var nextModel = function(){
+			if(!models.length) {
+				next(model);
+			} else {
+				require('./'+models.shift())(model, nextModel);
+			}
 		};
-		while(models.length)
-			require('./'+models.shift())(model, finished);
+		nextModel();
 	} else {
 		next(model);
 	}
