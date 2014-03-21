@@ -14,12 +14,12 @@ var TYPEVAL = {
 // define schema
 var Schema = fw.db.Schema;
 var schemaObj = {
-	id: String,
-	type: String,
+	id: { type: String, index: true },
+	type: { type: String, index: true },
 	displayName: String,
 	email: String,
-	url: String,
-	description: String,
+	url: { type: String, default: '' },
+	description: { type: String, default: '' },
 	password: String,
 };
 var schema = new Schema(schemaObj, {autoIndex: false});

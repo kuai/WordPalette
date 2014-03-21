@@ -1,6 +1,7 @@
 /* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
 
 body {
+    font-size: 16px;
     margin: 0;
     background: #ddd;
 }
@@ -95,6 +96,9 @@ a:hover {
 }
 #content {
     min-height: 100%;
+}
+#content a {
+    color: #00a7cc;
 }
 #backstage_busy {
     position: absolute;

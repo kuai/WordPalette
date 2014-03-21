@@ -45,7 +45,11 @@ fw.main(function(pg){
 		showCurStyle();
 		// show user bar
 		if(info.id)
-			$('.header_right').html(tmpl.userInfo(info));
+			$('.header_right').html(tmpl.userInfo(info))
+				.find('.logout').click(function(e){
+					e.preventDefault();
+					wp.logout();
+				});
 		// raise an event to notify child pages
 		pg.userInfo = info;
 		pg.emit('userInfoReady');

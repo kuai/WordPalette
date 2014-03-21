@@ -3,12 +3,26 @@
 
 fw.main(function(pg){
 	var tmpl = pg.tmpl;
+	var _ = tmpl.i18n;
 
 	var showPage = function(){
 		if(pg.destroyed) return;
 		var userInfo = pg.parent.userInfo;
 		if(!userInfo.id) {
+			// login page
 			var $content = $('#content').html(tmpl.login());
+			// section switch
+			$content.find('.section_title a').click(function(e){
+				e.preventDefault();
+				var $section = $(this).closest('.section');
+				if(!$section.hasClass('section_folded')) return;
+				$section.parent().children('.section:not(.section_folded)').addClass('section_folded')
+					.children('form').slideUp(200, function(){
+						$section.removeClass('section_folded').children('form').slideDown(200);
+					});
+			});
+			$content.find('.section_folded>form').hide();
+			// submit forms
 			$content.find('form').each(function(){
 				var $form = $(this);
 				pg.form(this, function(){
@@ -26,12 +40,18 @@ fw.main(function(pg){
 				}, function(err){
 					if(err) {
 						$form.find('[type=submit]').prop('disabled', false);
+						$form.find('.error').html(tmpl.error(err));
 						return;
 					}
-					location.reload();
+					$('.home_login').fadeOut(200, function(){
+						$('#content').html(tmpl.success());
+						setTimeout(function(){
+							location.pathname = '/wp.backstage/home';
+						}, 3000);
+					});
 				}, function(){
 					$form.find('[type=submit]').prop('disabled', false);
-					// TODO
+					$form.find('.error').html(tmpl.error({ timeout: true }));
 				});
 			});
 		} else {

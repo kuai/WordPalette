@@ -7,10 +7,41 @@ fw.main(function(pg){
 	pg.on('childLoadEnd', function(){
 		fw.loadingLogo.disabled = true;
 	});
+
 	// gravatar helper
 	wp.gravatarUrl = function(email, size, def){
 		var url = 'http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?d=' + encodeURIComponent(def || 'mm');
 		if(size) url += '&s=' + size;
 		return url;
+	};
+	
+	// login/out helper
+	wp.login = function(id, password, cb){
+		cb = cb || function(){};
+		pg.rpc('/wp.backstage/user:login', { id: id, password: CryptoJS.SHA256(password) }, function(err){
+			if(err) cb(err);
+			else {
+				cb();
+				setTimeout(function(){
+					location.reload();
+				}, 0);
+			}
+		}, function(){
+			cb({timeout: true});
+		});
+	};
+	wp.logout = function(cb){
+		cb = cb || function(){};
+		pg.rpc('/wp.backstage/user:logout', function(err){
+			if(err) cb(err);
+			else {
+				cb();
+				setTimeout(function(){
+					location.reload();
+				}, 0);
+			}
+		}, function(){
+			cb({timeout: true});
+		});
 	};
 });

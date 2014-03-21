@@ -5,61 +5,83 @@
 </tmpl>
 
 <tmpl id="login">
-	<div class="home">
-		<div class="folder">
-			<form action="user" method="login">
-				<div>
-					<lable>`Username`</label>
-					<input type="text" name="id" required>
-				</div>
-				<div>
-					<lable>`Password`</label>
-					<input type="hidden" name="password">
-					<input type="password" class="password" required>
-				</div>
-				<div>
-					<input type="submit" value="`Login`">
-				</div>
-			</form>
-		</div>
-		<div class="folder">
-			<form action="user" method="register">
-				<div>
-					<lable>`Username`</label>
-					<input type="text" name="id" required>
-				</div>
-				<div>
-					<lable>`Password`</label>
-					<input type="hidden" name="password">
-					<input type="password" class="password" required>
-				</div>
-				<div>
-					<lable>`Password (Retype)`</label>
-					<input type="password" class="passwordRe">
-				</div>
-				<div>
-					<lable>`Email`</label>
-					<input type="email" name="email" required>
-				</div>
-				<div>
-					<input type="submit" value="`register`">
-				</div>
-			</form>
-		</div>
-		<div class="folder">
-			<form action="user" method="forgetPassword">
-				<div>
-					<lable>`Username`</label>
-					<input type="text" name="id" required>
-				</div>
-				<div>
-					<lable>`Email`</label>
-					<input type="email" name="email" required>
-				</div>
-				<div>
-					<input type="submit" value="`Login`">
-				</div>
-			</form>
+	<div class="home_login">
+		<div class="sections">
+			<div class="section">
+				<div class="section_title"><a href="#">`Login`</a></div>
+				<form action="user" method="login">
+					<div class="form_row">
+						<label>`Username`</label>
+						<input type="text" name="id" required>
+					</div>
+					<div class="form_row">
+						<label>`Password`</label>
+						<input type="hidden" name="password">
+						<input type="password" class="password" required>
+					</div>
+					<div class="form_row">
+						<div class="error"></div>
+						<input type="submit" class="submit" value="`Login`">
+					</div>
+				</form>
+			</div>
+			<div class="section section_folded">
+				<div class="section_title"><a href="#">`Register`</a></div>
+				<form action="user" method="register">
+					<div class="form_row">
+						<label>`Username`</label>
+						<input type="text" name="id" required>
+					</div>
+					<div class="form_row">
+						<label>`Password`</label>
+						<input type="hidden" name="password">
+						<input type="password" class="password" required>
+					</div>
+					<div class="form_row">
+						<label>`Password (Re-type)`</label>
+						<input type="password" class="passwordRe">
+					</div>
+					<div class="form_row">
+						<label>`Email`</label>
+						<input type="email" name="email" required>
+					</div>
+					<div class="form_row">
+						<div class="error"></div>
+						<input type="submit" class="submit" value="`register`">
+					</div>
+				</form>
+			</div>
+			<div class="section section_folded">
+				<div class="section_title section_title_small"><a href="#">`Forgot password?`</a></div>
+				<form action="user" method="recoverPassword">
+					<div class="form_row">
+						<label>`Username`</label>
+						<input type="text" name="id" required>
+					</div>
+					<div class="form_row">
+						<label>`Email`</label>
+						<input type="email" name="email" required>
+					</div>
+					<div class="form_row">
+						<div class="error"></div>
+						<input type="submit" class="submit" value="`Recover Password`">
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
+</tmpl>
+
+<tmpl id="success">
+	<div class="home_login">`Success. Will soon reload this page...`</div>
+</tmpl>
+
+<tmpl id="error">
+	{{#if system}}`Sorry, an internal server error occurred.`{{/if}}
+	{{#if timeout}}`Timed out. Please check your network.`{{/if}}
+	{{#if idUsed}}`The username exists. Please choose another one.`{{/if}}
+	{{#if idNull}}`The username does not exist.`{{/if}}
+	{{#if idIllegal}}`The username should contain 4 to 32 letters, numbers, underlines, and hyphens.`{{/if}}
+	{{#if emailIllegal}}`The email address is illegal.`{{/if}}
+	{{#if pwd}}`The password is wrong.`{{/if}}
 </tmpl>
