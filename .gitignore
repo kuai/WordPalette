@@ -1,4 +1,5 @@
 /config.json
 /node_modules/fw.mpa
 /cache
-/static/uploads
+/static/wp.uploads
+/static/wp.avatar

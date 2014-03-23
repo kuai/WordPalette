@@ -3,6 +3,8 @@
 
 var COLLECTION = 'wp._site';
 
+var fs = require('fs');
+
 // define schema
 var Schema = fw.db.Schema;
 var schemaObj = {
@@ -62,6 +64,7 @@ module.exports = function(model, next){
 	model.Site.ensureIndexes(function(){
 		model.Site.find({}, function(err, res){
 			if(err) throw(err);
+			// get site list
 			var siteList = [];
 			for(var i=0; i<res.length; i++) {
 				var id = res[i]._id;
@@ -72,6 +75,20 @@ module.exports = function(model, next){
 				listCount += domain.length;
 			}
 			model.siteList = siteList;
+			// make the dirs for sites
+			if(!fs.existsSync('./static/wp.uploads'))
+				fs.mkdirSync('./static/wp.uploads');
+			if(!fs.existsSync('./static/wp.avatars'))
+				fs.mkdirSync('./static/wp.avatars');
+			for(var i=0; i<siteList.length; i++) {
+				if(!fs.existsSync('./static/wp.uploads/' + siteList[i]))
+					fs.mkdirSync('./static/wp.uploads/' + siteList[i]);
+				if(!fs.existsSync('./static/wp.avatars/' + siteList[i]))
+					fs.mkdirSync('./static/wp.avatars/' + siteList[i]);
+			}
+			model.Site.dir = function(conn, name){
+				return './static/wp.' + name + '/' + listCache[conn.host] + '/';
+			};
 			next();
 		});
 	});

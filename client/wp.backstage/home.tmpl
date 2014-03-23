@@ -1,6 +1,36 @@
 <tmpl id="main">
-	<div class="home">
-		<img class="gravatar">
+	<div class="home_user">
+		<img class="avatar" src="{{avatar}}">
+		<div class="avatar_error"></div>
+		<div class="avatar_file"><input type="file" accept="image/*"></div>
+		<form action="user" method="modify" class="user_info">
+			<div class="display_name info">{{displayName}}</div>
+			<input type="text" class="display_name" name="displayName" value="{{displayName}}" required>
+			<div class="username">{{username}}</div>
+			<div class="email"><a href="mailto:{{email}}">{{email}}</a></div>
+			{{#if url}}
+				<div class="url info">{{url}}</div>
+				<input type="text" class="url" name="url" value="{{url}}" placeholder="URL">
+			{{else}}
+				<div class="url info">`(URL not set)`</div>
+				<input type="text" class="url" name="url" placeholder="URL">
+			{{/if}}
+			<div class="error"></div>
+			<input type="submit" class="submit" value="`Update`">
+		</form>
+		<a href="#" class="modify_password"><div>Modify Password</div></a>
+		<form action="user" method="modifyPassword" class="user_password">
+			<input type="hidden" name="original">
+			<input type="hidden" name="password">
+			<input type="password" class="original" required placeholder="Original Password">
+			<input type="password" class="new" required placeholder="New Password">
+			<input type="password" class="newRe" required placeholder="Retype...">
+			<div class="error"></div>
+			<input type="submit" class="submit" value="`Modify Password`">
+		</form>
+	</div>
+	<div class="home_main">
+		<a fw href="/wp.backstage/post" class="write">`Write New Post`</a>
 	</div>
 </tmpl>
 
@@ -79,9 +109,12 @@
 <tmpl id="error">
 	{{#if system}}`Sorry, an internal server error occurred.`{{/if}}
 	{{#if timeout}}`Timed out. Please check your network.`{{/if}}
+	{{#if noPermission}}`You are not authorized.`{{/if}}
 	{{#if idUsed}}`The username exists. Please choose another one.`{{/if}}
 	{{#if idNull}}`The username does not exist.`{{/if}}
 	{{#if idIllegal}}`The username should contain 4 to 32 letters, numbers, underlines, and hyphens.`{{/if}}
 	{{#if emailIllegal}}`The email address is illegal.`{{/if}}
+	{{#if displayNameIllegal}}`The display name is illegal.`{{/if}}
+	{{#if urlIllegal}}`The url address is illegal.`{{/if}}
 	{{#if pwd}}`The password is wrong.`{{/if}}
 </tmpl>

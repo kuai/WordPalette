@@ -13,6 +13,10 @@ a {
 a:hover {
     text-decoration: underline;
 }
+.error {
+    color: red;
+    font-size: 0.9em;
+}
 
 #backstage {
     position: absolute;
@@ -59,6 +63,9 @@ a:hover {
     background: #444;
     font-weight: bold;
     box-shadow: 0 0 5px #444;
+}
+.tabs a:hover {
+    text-decoration: none;
 }
 .tab_sep {
     height: 1em;

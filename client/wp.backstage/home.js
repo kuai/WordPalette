@@ -9,6 +9,7 @@ fw.main(function(pg){
 		if(pg.destroyed) return;
 		var userInfo = pg.parent.userInfo;
 		if(!userInfo.id) {
+
 			// login page
 			var $content = $('#content').html(tmpl.login());
 			// section switch
@@ -54,9 +55,86 @@ fw.main(function(pg){
 					$form.find('.error').html(tmpl.error({ timeout: true }));
 				});
 			});
+
 		} else {
-			$('#content').html(tmpl.main(userInfo))
-				.find('.gravatar').prop('src', wp.gravatarUrl(userInfo.email, 256));
+
+			// common page
+			var $content = $('#content').html(tmpl.main({
+				username: userInfo.id,
+				displayName: userInfo.displayName,
+				type: userInfo.type,
+				email: userInfo.email,
+				url: userInfo.url,
+				avatar: userInfo.avatar || wp.gravatarUrl(userInfo.email, 128)
+			}));
+			// user settings
+			var $user = $content.children('.home_user');
+			$user.find('.avatar_file input').change(function(){
+				// read, convert and send image
+				var file = this.files[0];
+				var url = URL.createObjectURL(file);
+				var img = document.createElement('img');
+				img.onload = function(){
+					URL.revokeObjectURL(url);
+					var canvas = document.createElement('canvas');
+					canvas.width = canvas.height = 128;
+					canvas.getContext('2d').drawImage(img, 0, 0, 128, 128);
+					$user.find('.avatar_error').html('');
+					$('.avatar').fadeTo(200, 0.5);
+					pg.rpc('user:avatar', canvas.toDataURL('image/png'), function(err){
+						if(err) $user.find('.avatar_error').html(tmpl.error(err));
+						else location.reload();
+					}, function(){
+						$user.find('.avatar_error').html(tmpl.error({ timeout: true }));
+					});
+				};
+				img.src = url;
+			});
+			$user.find('.avatar').click(function(){
+				$user.find('.avatar_file input').click();
+			});
+			var $form = $user.find('.user_info').on('click', '.info', function(){
+				$form.find('.info').hide();
+				$form.find('input').css('display', 'block');
+			});
+			pg.form($form[0], function(){
+				$form.find('.error').html('');
+				$form.find('.submit').attr('disabled', true);
+			}, function(err){
+				$form.find('.submit').attr('disabled', false);
+				if(err) $form.find('.error').html(tmpl.error(err));
+				else location.reload();
+			}, function(){
+				$form.find('.submit').attr('disabled', false);
+				$form.find('.error').html(tmpl.error({ timeout: true }));
+			});
+			var $pwdForm = $user.find('.user_password');
+			$user.find('.modify_password').click(function(e){
+				e.preventDefault();
+				$(this).hide();
+				$pwdForm.fadeIn(200);
+			});
+			pg.form($pwdForm[0], function(){
+				if($pwdForm.find('.new').val() !== $pwdForm.find('.newRe').val()) {
+					$pwdForm.find('.newRe').val('').focus();
+					return false;
+				}
+				$pwdForm.find('[name=password]').val(CryptoJS.SHA256($pwdForm.find('.new').val()));
+				$pwdForm.find('[name=original]').val(CryptoJS.SHA256($pwdForm.find('.original').val()));
+				$pwdForm.find('.error').html('');
+				$pwdForm.find('.submit').attr('disabled', true);
+			}, function(err){
+				$pwdForm.find('.submit').attr('disabled', false);
+				if(err) $pwdForm.find('.error').html(tmpl.error(err));
+				else {
+					$pwdForm.hide();
+					$user.find('.modify_password').fadeIn(200);
+				}
+			}, function(){
+				$pwdForm.find('.submit').attr('disabled', false);
+				$pwdForm.find('.error').html(tmpl.error({ timeout: true }));
+			});
+
 		}
 	};
 

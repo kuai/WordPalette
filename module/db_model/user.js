@@ -21,6 +21,7 @@ var schemaObj = {
 	url: { type: String, default: '' },
 	description: { type: String, default: '' },
 	password: String,
+	avatar: { type: String, default: '' }
 };
 var schema = new Schema(schemaObj, {autoIndex: false});
 
@@ -38,15 +39,25 @@ module.exports = function(model, next){
 	}
 
 	// an helper to check permission
-	model.User.checkPermission = function(type, conn, res){
+	model.User.checkPermission = function(conn, type, res){
 		var site = model.Site.cachedId(conn.host);
 		if(!site) {
 			res(false);
 			return;
 		}
 		cols[site].findOne({id: conn.session.userId}).select('type').exec(function(err, r){
-			if(err || !r) res(false);
-			else res(TYPEVAL[r.type] >= TYPEVAL[type]);
+			if(err || !r) {
+				res(false);
+				return;
+			}
+			if(typeof(type) !== 'object') {
+				res(TYPEVAL[r.type] >= TYPEVAL[type]);
+			} else {
+				var a = [];
+				for(var i=0; i<type.length; i++)
+					a.push(TYPEVAL[r.type] >= TYPEVAL[type[i]]);
+				res.call(global, a);
+			}
 		});
 	};
 	next();
