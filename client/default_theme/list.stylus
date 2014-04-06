@@ -1,0 +1,16 @@
+
+.post_item
+	clear both
+	margin-top 20px
+.post_abstract
+	width 580px
+	background #ddd
+	float left
+	padding 0 20px
+	margin-top 20px
+.post_abstract p img
+	width 560px
+	margin 5px 10px
+.post_list_page
+	clear both
+

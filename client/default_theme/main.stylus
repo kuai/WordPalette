@@ -1,0 +1,74 @@
+/* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
+
+body
+	margin 0px auto	
+	background #ddd
+h1
+	font-size 1.5em
+	color #fff
+h2
+	font-size 1.2em
+	color #fff
+ul
+	list-style none
+a
+	text-decoration none
+.site
+	width 100%
+	margin 0px auto
+.site_title
+	color #000
+	height 40px
+	line-height 40px
+	float left
+	margin 40px auto 10px 20px
+	color #fff
+.site_subtitle
+	height 30px
+	line-height 30px
+	float left
+	margin 48px auto 10px 20px
+.site_content
+	clear both
+	width 800px
+	margin 20px auto
+	padding 20px
+	background #fff
+.post_title 
+	height 40px
+	line-height 40px
+	float left
+	margin 20px 20px auto auto
+.post_author
+	height 30px
+	line-height 30px
+	float left
+	margin 28px 10px auto auto
+.post_time
+	width 300px
+	height 30px
+	line-height 30px
+	float left
+	margin 28px 10px auto auto
+.post_mes
+	clear both
+	margin 20px 20px 20px 0
+	width 160px
+	float left
+	line-height 30px
+.post_categories
+	width 140px
+	background #ddd
+	padding-left 20px
+	margin 0 20px 20px 0
+.post_series , .post_tags
+	width 140px	
+	background #ddd
+	padding-left 20px
+	margin 20px 20px 20px 0
+.post_categories li a, .post_series li a, .post_tags li a
+	color #000
+.post_series_title
+	height 30px
+	margin-bottom 10px
+
