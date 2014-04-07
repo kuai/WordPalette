@@ -35,7 +35,7 @@ fw.main(function(pg){
 					}
 					if($form.find('.password').val())
 						$form.find('[name=password]').val(
-							CryptoJS.SHA256($form.find('.password').val())
+							CryptoJS.SHA256($form.find('[id]').val() +'|'+ $form.find('.password').val())
 						);
 					$form.find('[type=submit]').prop('disabled', true);
 				}, function(err){
@@ -65,7 +65,8 @@ fw.main(function(pg){
 				type: userInfo.type,
 				email: userInfo.email,
 				url: userInfo.url,
-				avatar: userInfo.avatar || wp.gravatarUrl(userInfo.email, 128)
+				avatar: (userInfo.avatar ? userInfo.avatar+'/128.png' : wp.gravatarUrl(userInfo.email, 128)),
+				avatarDel: !!userInfo.avatar
 			}));
 			// user settings
 			var $user = $content.children('.home_user');
@@ -89,6 +90,15 @@ fw.main(function(pg){
 					});
 				};
 				img.src = url;
+			});
+			$user.find('.avatar_del a').click(function(e){
+				e.preventDefault();
+				$(this).hide();
+				$('.avatar').fadeTo(200, 0.5);
+				pg.rpc('user:avatar', '', function(err){
+					if(err) $user.find('.avatar_error').html(tmpl.error(err));
+					else location.reload();
+				});
 			});
 			$user.find('.avatar').click(function(){
 				$user.find('.avatar_file input').click();
@@ -119,8 +129,8 @@ fw.main(function(pg){
 					$pwdForm.find('.newRe').val('').focus();
 					return false;
 				}
-				$pwdForm.find('[name=password]').val(CryptoJS.SHA256($pwdForm.find('.new').val()));
-				$pwdForm.find('[name=original]').val(CryptoJS.SHA256($pwdForm.find('.original').val()));
+				$pwdForm.find('[name=password]').val(CryptoJS.SHA256(userInfo.id +'|'+ $pwdForm.find('.new').val()));
+				$pwdForm.find('[name=original]').val(CryptoJS.SHA256(userInfo.id +'|'+ $pwdForm.find('.original').val()));
 				$pwdForm.find('.error').html('');
 				$pwdForm.find('.submit').attr('disabled', true);
 			}, function(err){

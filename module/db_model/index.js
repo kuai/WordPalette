@@ -5,7 +5,7 @@ var models = [
 	'engine_settings.js',
 	'site.js',
 	'user.js',
-	//'settings.js',
+	'settings.js',
 	//'post.js',
 	//'comment.js'
 ];

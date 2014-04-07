@@ -48,7 +48,9 @@ fw.main(function(pg){
 			$('.header_right').html(tmpl.userInfo(info))
 				.find('.logout').click(function(e){
 					e.preventDefault();
-					wp.logout();
+					wp.logout(function(){
+						location.href = '/wp.backstage/home';
+					});
 				});
 		// raise an event to notify child pages
 		pg.userInfo = info;

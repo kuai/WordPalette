@@ -63,6 +63,7 @@ if(fw.db) {
 			parent: 'backstage',
 			main: 'settings',
 			tmpl: 'settings',
+			style: 'settings.css'
 		},
 	};
 }

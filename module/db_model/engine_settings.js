@@ -6,7 +6,7 @@ var COLLECTION = 'wp._settings';
 // define schema
 var Schema = fw.db.Schema;
 var schemaObj = {
-	v: String,
+	v: Schema.Types.Mixed,
 	_id: String,
 };
 var schema = new Schema(schemaObj, {autoIndex: false});
