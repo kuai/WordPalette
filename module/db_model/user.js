@@ -58,6 +58,9 @@ module.exports = function(model, next){
 			}
 		});
 	};
+	model.User.typeLevel = function(type){
+		return TYPEVAL[type];
+	};
 
 	// build models
 	var c = model.siteList.length + 1;

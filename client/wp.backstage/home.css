@@ -96,11 +96,11 @@
     color: red;
     font-size: 0.9em;
 }
-.home_user .email, .home_user .url {
+.home_user .email, .home_user .url, .home_user .description {
     font-size: 0.9em;
     color: #888;
 }
-.home_user .user_info input {
+.home_user .user_info input, .home_user .user_info textarea {
     display: none;
     width: 100%;
     margin: 2px -2px;

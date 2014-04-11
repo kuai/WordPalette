@@ -1,12 +1,18 @@
 // Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT
 'use strict';
 
+var USER_LIST_LEN = 20;
+
 fw.main(function(pg){
 	var tmpl = pg.tmpl;
 	var _ = tmpl.i18n;
 
-	var table = wp.tableBuilder($('#content').html(''), {}, [
-		{ id: '_id', type: 'hidden' },
+	// init page structure
+	var $content = $('#content').html(tmpl.main());
+	var $table = $content.find('.table');
+
+	// build table
+	var table = wp.tableBuilder($table, {idCol: 'id'}, [
 		{ id: 'id', name: _('Username'), input: 'add' },
 		{ id: 'displayName', name: _('Display Name') },
 		{ id: 'type', name: _('Type'), input: {
@@ -24,24 +30,70 @@ fw.main(function(pg){
 		type: _('reader')
 	})
 	.data(function(page){
-		table.set([
-			{ _id: '1', id: 1, displayName: '1234567890', type: _('admin'), email: '1234567890@xxx.xxx', url: 'http://mistymiracle.org/lastleaf', description: '12345678901234567890123456789012345678901234567890'},
-			{ _id: '2', id: 1, displayName: '1234567890', type: _('admin'), email: '1234567890@xxx.xxx', url: 'http://mistymiracle.org/lastleaf', description: '12345678901234567890123456789012345678901234567890'},
-			{ _id: '3', id: 1, displayName: '1234567890', type: _('admin'), email: '1234567890@xxx.xxx', url: 'http://mistymiracle.org/lastleaf', description: '12345678901234567890123456789012345678901234567890'}
-		]);
-		setTimeout(function(){
-			table.setRow(2, { _id: '2', id: 2, displayName: '1111', type: _('writer'), email: '1234567890@xxx.xxx', url: 'http://mistymiracle.org/lastleaf'});
-		}, 2000);
+		pg.rpc('user:list', {from: page*USER_LIST_LEN, count: USER_LIST_LEN}, function(err, r){
+			if(err) {
+				table.showError(tmpl.error(err));
+				return;
+			}
+			table.setTotal(Math.ceil(r.total/USER_LIST_LEN));
+			var rows = r.rows;
+			for(var i=0; i<rows.length; i++) {
+				rows[i].type = _(rows[i].type);
+				rows[i].password = '******';
+			}
+			table.set(rows);
+		}, function(){
+			table.showError(tmpl.error({ timeout: true }));
+		});
 	})
-	.setPage(1, 3);
+	.setPage(0, 1);
 
+	// table operations
 	table.add(function(data){
-		console.info(data);
+		if(data.password)
+			data.password = CryptoJS.SHA256(data.id.toLowerCase() + '|' + data.password).toString();
+		pg.rpc('user:set', data, true, function(err){
+			if(err) {
+				table.showError(tmpl.error(err));
+				table.enableAdd();
+				return;
+			}
+			data.type = _(data.type);
+			data.password = '******';
+			table.addRow(data.id, data);
+		}, function(){
+			table.showError(tmpl.error({ timeout: true }));
+			table.enableAdd();
+		});
 	});
 	table.change(function(data){
-		console.info(data);
+		if(data.password)
+			data.password = CryptoJS.SHA256(data.id.toLowerCase() + '|' + data.password).toString();
+		pg.rpc('user:set', data, false, function(err){
+			if(err) {
+				table.showError(tmpl.error(err));
+				table.enableModify(data.id);
+				return;
+			}
+			data.type = _(data.type);
+			data.password = '******';
+			table.setRow(data.id, data);
+		}, function(){
+			table.showError(tmpl.error({ timeout: true }));
+			table.enableModify(data.id);
+		});
 	});
 	table.remove(function(id){
-		console.info(id);
+		pg.rpc('user:remove', {id: id}, function(err){
+			if(err) {
+				table.showError(tmpl.error(err));
+				table.enableModify(data.id);
+				return;
+			}
+			table.removeRow(id);
+		}, function(){
+			table.showError(tmpl.error({ timeout: true }));
+			table.enableModify(data.id);
+		});
 	});
 });

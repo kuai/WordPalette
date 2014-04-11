@@ -23,7 +23,8 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 
 	// build dom structure
 	var _ = wp.tableBuilder.i18n;
-	var $table = $('<table cellpadding="0" cellspacing="0" border="0" class="wp_table"><thead></thead><tbody></tbody><tfoot></tfoot></table>').appendTo($div);
+	var $wrapper = $('<div><div class="wp_table_errors"></div><table cellpadding="0" cellspacing="0" border="0" class="wp_table"><thead></thead><tbody></tbody><tfoot></tfoot></table></div>').appendTo($div);
+	var $table = $wrapper.children('table');
 	var $thead = $table.children('thead');
 	var $tbody = $table.children('tbody');
 	var $tfoot = $table.children('tfoot');
@@ -97,7 +98,10 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 			} else if(type === 'password') {
 				// password
 				var $input = $('<input type="password" name="'+colId+'">');
-			} else if(type === false || (type === 'add' && !$tr.hasClass('wp_table_add_row'))) {
+			} else if(type === 'add' && !$tr.hasClass('wp_table_add_row')) {
+				// hidden
+				var $input = $('<span></span>').text(this.wpTableData).add($('<input type="hidden" name="'+colId+'">').val(this.wpTableData));
+			} else if(type === false) {
 				// not editable
 				var $input = $('<span></span>').text(this.wpTableData);
 			} else {
@@ -118,7 +122,6 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 		var disableInputs = function(cb){
 			$tr.find('input, select, textarea').attr('disabled', true);
 			$btns.slideUp(200, function(){
-				$btns.remove();
 				if(cb) cb();
 			});
 		};
@@ -186,6 +189,20 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 	};
 	$tbody.on('click', '.wp_table_row', enterEditMode);
 
+	// cancel edit
+	var enableAdd = function(){
+		var $tr = $tbody.children('.wp_table_add_row');
+		$tr.find('.wp_table_edit_btn').slideDown(200, function(){
+			$tr.find('input, select, textarea').removeAttr('disabled');
+		});
+	};
+	var enableModify = function(id){
+		var $tr = $tbody.find('[rowId='+id+']');
+		$tr.find('.wp_table_edit_btn').slideDown(200, function(){
+			$tr.find('input, select, textarea').removeAttr('disabled');
+		});
+	};
+
 	// data control
 	var rowContent = function(id, data){
 		var $tr = $tbody.children('[rowId="'+id+'"]').html('');
@@ -215,6 +232,10 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 	var setRow = function(id, data){
 		rowContent(id, data).hide().fadeIn(200);
 		return this;
+	};
+	var addRow = function(id, data){
+		$tbody.find('.wp_table_add_row').remove();
+		return setRow(id, data);
 	};
 	var removeRow = function(id){
 		var $tr = $tbody.children('[rowId="'+id+'"]').fadeOut(200, function(){
@@ -278,6 +299,27 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 		}, 0);
 		return this;
 	};
+	var setTotal = function(total){
+		pageTotal = total || 0;
+		updateNavi();
+		return this;
+	};
+
+	// show an error
+	var $errors = $wrapper.children('.wp_table_errors');
+	var showError = function(msg){
+		var $error = $('<div></div>').html(msg).appendTo($errors).slideDown(200);
+		var hidden = false;
+		var hide = function(){
+			if(hidden) return;
+			hidden = true;
+			$error.slideUp(200, function(){
+				$error.remove();
+			});
+		};
+		$error.click(hide);
+		setTimeout(hide, 10000);
+	};
 
 	// event binding funcs
 	var clickHandled = false;
@@ -304,8 +346,14 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 	};
 	var that = {
 		setRow: setRow,
+		addRow: addRow,
+		removeRow: removeRow,
 		set: set,
 		setPage: setPage,
+		setTotal: setTotal,
+		showError: showError,
+		enableAdd: enableAdd,
+		enableModify: enableModify,
 		click: click,
 		change: change,
 		remove: remove,

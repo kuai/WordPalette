@@ -17,12 +17,12 @@ module.exports = function(next){
 		});
 		if(typeof(text) === 'undefined' || text === null)
 			text = html
-				.replace(/\s+/, ' ')
-				.replace(/^ /, '')
-				.replace(/ $/, '')
-				.replace(/<\/p>/, '\r\n\r\n')
-				.replace(/<br>/, '\r\n')
-				.replace(/<.*?>/, '');
+				.replace(/\s+/g, ' ')
+				.replace(/^ /g, '')
+				.replace(/ $/g, '')
+				.replace(/ ?<\/p> ?/ig, '\r\n\r\n')
+				.replace(/ ?<br> ?/ig, '\r\n')
+				.replace(/<.*?>/g, '');
 		smtpTransport.sendMail({
 			from: (options.name ? options.name + ' <' + options.addr + '>' : options.addr),
 			to: (name ? name + ' <' + addr + '>' : addr),

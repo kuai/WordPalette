@@ -35,7 +35,7 @@ fw.main(function(pg){
 					}
 					if($form.find('.password').val())
 						$form.find('[name=password]').val(
-							CryptoJS.SHA256($form.find('[id]').val() +'|'+ $form.find('.password').val())
+							CryptoJS.SHA256($form.find('[name=id]').val().toLowerCase() +'|'+ $form.find('.password').val())
 						);
 					$form.find('[type=submit]').prop('disabled', true);
 				}, function(err){
@@ -44,12 +44,7 @@ fw.main(function(pg){
 						$form.find('.error').html(tmpl.error(err));
 						return;
 					}
-					$('.home_login').fadeOut(200, function(){
-						$('#content').html(tmpl.success());
-						setTimeout(function(){
-							location.pathname = '/wp.backstage/home';
-						}, 3000);
-					});
+					location.pathname = '/wp.backstage/home';
 				}, function(){
 					$form.find('[type=submit]').prop('disabled', false);
 					$form.find('.error').html(tmpl.error({ timeout: true }));
@@ -65,6 +60,7 @@ fw.main(function(pg){
 				type: userInfo.type,
 				email: userInfo.email,
 				url: userInfo.url,
+				description: userInfo.description,
 				avatar: (userInfo.avatar ? userInfo.avatar+'/128.png' : wp.gravatarUrl(userInfo.email, 128)),
 				avatarDel: !!userInfo.avatar
 			}));
@@ -105,7 +101,7 @@ fw.main(function(pg){
 			});
 			var $form = $user.find('.user_info').on('click', '.info', function(){
 				$form.find('.info').hide();
-				$form.find('input').css('display', 'block');
+				$form.find('input, textarea').css('display', 'block');
 			});
 			pg.form($form[0], function(){
 				$form.find('.error').html('');
@@ -129,8 +125,8 @@ fw.main(function(pg){
 					$pwdForm.find('.newRe').val('').focus();
 					return false;
 				}
-				$pwdForm.find('[name=password]').val(CryptoJS.SHA256(userInfo.id +'|'+ $pwdForm.find('.new').val()));
-				$pwdForm.find('[name=original]').val(CryptoJS.SHA256(userInfo.id +'|'+ $pwdForm.find('.original').val()));
+				$pwdForm.find('[name=password]').val(CryptoJS.SHA256(userInfo.id.toLowerCase() +'|'+ $pwdForm.find('.new').val()));
+				$pwdForm.find('[name=original]').val(CryptoJS.SHA256(userInfo.id.toLowerCase() +'|'+ $pwdForm.find('.original').val()));
 				$pwdForm.find('.error').html('');
 				$pwdForm.find('.submit').attr('disabled', true);
 			}, function(err){

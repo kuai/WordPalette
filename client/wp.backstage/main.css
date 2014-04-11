@@ -121,6 +121,7 @@ a:hover {
 /* table */
 .wp_table {
     width: 100%;
+    font-size: 0.9em;
 }
 .wp_table th, .wp_table td {
     text-align: left;
@@ -142,7 +143,6 @@ a:hover {
     padding-top: 1px;
     padding-bottom: 7px;
     color: #666;
-    font-size: 0.9em;
 }
 .wp_table tbody tr:nth-child(4n+1), .wp_table tbody tr:nth-child(4n+2) {
     background: #eee;
@@ -213,4 +213,17 @@ a:hover {
 }
 .wp_table_edit_btn_right {
     float: right;
+}
+.wp_table_errors {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+.wp_table_errors div {
+    background: #FC9292;
+    border-bottom: 2px solid red;
+    color: #444;
+    text-align: center;
+    padding: 7px 20px 5px;
 }

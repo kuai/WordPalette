@@ -1,0 +1,17 @@
+<tmpl id="main">
+	<div class="table"></div>
+</tmpl>
+
+<tmpl id="error">
+	{{#if system}}`Sorry, an internal server error occurred.`{{/if}}
+	{{#if timeout}}`Timed out. Please check your network.`{{/if}}
+	{{#if noPermission}}`You are not authorized.`{{/if}}
+	{{#if idUsed}}`The username exists. Please choose another one.`{{/if}}
+	{{#if idNull}}`The username does not exist.`{{/if}}
+	{{#if pwdNull}}`The password is required.`{{/if}}
+	{{#if idIllegal}}`The username should contain 4 to 32 letters, numbers, underlines, and hyphens.`{{/if}}
+	{{#if emailIllegal}}`The email address is illegal.`{{/if}}
+	{{#if displayNameIllegal}}`The display name is illegal.`{{/if}}
+	{{#if urlIllegal}}`The url address is illegal.`{{/if}}
+	{{#if descriptionIllegal}}`The description is too long.`{{/if}}
+</tmpl>

@@ -16,6 +16,13 @@
 				<div class="url info">`(URL not set)`</div>
 				<input type="text" class="url" name="url" placeholder="URL">
 			{{/if}}
+			{{#if description}}
+				<div class="description info">{{description}}</div>
+				<textarea id="description" class="description" name="description" placeholder="Short description...">{{description}}</textarea>
+			{{else}}
+				<div class="description info">`(description not set)`</div>
+				<textarea id="description" class="description" name="description" placeholder="Short description..."></textarea>
+			{{/if}}
 			<div class="error"></div>
 			<input type="submit" class="submit" value="`Update`">
 		</form>
@@ -103,10 +110,6 @@
 	</div>
 </tmpl>
 
-<tmpl id="success">
-	<div class="home_login">`Success. Will soon reload this page...`</div>
-</tmpl>
-
 <tmpl id="error">
 	{{#if system}}`Sorry, an internal server error occurred.`{{/if}}
 	{{#if timeout}}`Timed out. Please check your network.`{{/if}}
@@ -119,5 +122,8 @@
 	{{#if emailIllegal}}`The email address is illegal.`{{/if}}
 	{{#if displayNameIllegal}}`The display name is illegal.`{{/if}}
 	{{#if urlIllegal}}`The url address is illegal.`{{/if}}
+	{{#if descriptionIllegal}}`The description is too long.`{{/if}}
 	{{#if pwd}}`The password is wrong.`{{/if}}
+	{{#if emailNotMatch}}`The username and email address are not match.`{{/if}}
+	{{#if pwdEmail}}`Your new password has been sent. Please check your mailbox.`{{/if}}
 </tmpl>

@@ -18,7 +18,7 @@ fw.main(function(pg){
 	// login/out helper
 	wp.register = function(id, password, email, cb){
 		cb = cb || function(){};
-		pg.rpc('/wp.backstage/user:register', { id: id, password: CryptoJS.SHA256(id+'|'+password), email: email }, function(err){
+		pg.rpc('/wp.backstage/user:register', { id: id, password: CryptoJS.SHA256(id.toLowerCase()+'|'+password), email: email }, function(err){
 			if(err) cb(err);
 			else {
 				cb();
@@ -29,7 +29,7 @@ fw.main(function(pg){
 	};
 	wp.login = function(id, password, cb){
 		cb = cb || function(){};
-		pg.rpc('/wp.backstage/user:login', { id: id, password: CryptoJS.SHA256(id+'|'+password) }, function(err){
+		pg.rpc('/wp.backstage/user:login', { id: id, password: CryptoJS.SHA256(id.toLowerCase()+'|'+password) }, function(err){
 			if(err) cb(err);
 			else {
 				cb();

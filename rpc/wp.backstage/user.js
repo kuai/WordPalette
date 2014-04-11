@@ -4,6 +4,7 @@
 var EMAIL_REGEXP = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\\\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
 
 var fs = require('fs');
+var crypto = require('crypto');
 var PNG = require('pngjs').PNG;
 var password = fw.module('password');
 var formFilter = fw.module('form_filter');
@@ -121,16 +122,64 @@ exports.logout = function(conn, res, args){
 	});
 };
 
+// recover password
+exports.recoverPassword = function(conn, res, args){
+	// filter data
+	args = formFilter(args, {
+		id: '',
+		email: ''
+	});
+	if(!args.id.match(/^[-\w]{4,32}$/i)) return res({idIllegal: true});
+	if(args.email.length > 64 || !args.email.match(EMAIL_REGEXP)) return res({emailIllegal: true});
+	// check db status
+	var user = User(conn);
+	if(!user) return res({system: true});
+	// check user and email pair
+	args.id = args.id.toLowerCase();
+	user.findOne({id: args.id}).select('email').exec(function(err, r){
+		if(err || !r) return res({idNull: true});
+		if(r.email !== args.email) return res({emailNotMatch: true});
+		crypto.randomBytes(6, function(err, r){
+			if(err) return res({system: true});
+			var pwd = r.toString('base64');
+			password.hash(crypto.createHash('sha256').update(args.id + '|' + pwd).digest('hex'), function(err, r){
+				if(err) return res({system: true});
+				user.update({id: args.id}, {password: r}, function(){
+					res({pwdEmail: true});
+					// send email
+					Settings(conn).get('basic', function(err, r){
+						if(err || !r) return;
+						var siteTitle = r.siteTitle;
+						Settings(conn).get('email', function(err, r){
+							if(err || !r) return;
+							var content = tmpl.pwdEmail(conn, {
+								siteTitle: siteTitle,
+								host: conn.host,
+								username: args.id,
+								email: args.email,
+								password: pwd
+							});
+							mail(r, args.displayName, args.email, _(conn, 'Password Reset on ') + siteTitle, content);
+						});
+					});
+				});
+			});
+		});
+	});
+};
+
 // modify the current user (except for id, email and password)
 exports.modify = function(conn, res, args){
 	// filter data
 	args = formFilter(args, {
 		displayName: '',
-		url: ''
+		url: '',
+		description: ''
 	});
 	if(args.displayName.length <= 0 || args.displayName.length > 32) return res({displayNameIllegal: true});
 	if(!args.url.match(/^https?:\/\//)) args.url = 'http://' + args.url;
 	if(args.url.length > 256) return res({urlIllegal: true});
+	if(args.description.length > 100) return res({descriptionIllegal: true});
 	// check login status
 	User.checkPermission(conn, 'reader', function(r){
 		if(!r) return res({noPermission: true});
@@ -274,5 +323,85 @@ exports.disable = function(conn, res, args){
 var disablePath = function(id, email, cb){
 	password.hash(id+'|'+email+'|'+fw.config.secret.cookie, function(err, r){
 		cb(err, '/wp.user/disable?i=' + id + '&e=' + encodeURIComponent(email) + '&s=' + encodeURIComponent(r));
+	});
+};
+
+// admin: get user list
+exports.list = function(conn, res, args){
+	// filter data
+	args = formFilter(args, {
+		from: 0,
+		count: 1
+	});
+	if(args.from < 0 || args.count <= 0 || args.count >= 50) return res({system: true});
+	// check permission
+	User.checkPermission(conn, 'admin', function(r){
+		if(!r) return res({noPermission: true});
+		User(conn).count(function(err, r){
+			if(err) return res({system: true});
+			var total = r;
+			User(conn).find({}).select('id displayName type email url description').sort('id').limit(args.count, args.from).exec(function(err, r){
+				if(err) return res({system: true});
+				res(null, {
+					total: total,
+					rows: r
+				});
+			});
+		});
+	});
+};
+
+// admin: create or update a user
+exports.set = function(conn, res, args, isAdd){
+	// filter data
+	args = formFilter(args, {
+		id: '',
+		type: '',
+		displayName: '',
+		email: '',
+		url: '',
+		description: '',
+		password: ''
+	});
+	if(!args.id.match(/^[-\w]{4,32}$/i)) return res({idIllegal: true});
+	if(!User.typeLevel(args.type)) return res({system: true});
+	if(args.email.length > 64 || !args.email.match(EMAIL_REGEXP)) return res({emailIllegal: true});
+	if((isAdd || args.password) && args.password.length !== 64) return res({pwdNull: true});
+	if(args.displayName.length <= 0 || args.displayName.length > 32) return res({displayNameIllegal: true});
+	if(args.url && !args.url.match(/^https?:\/\//)) args.url = 'http://' + args.url;
+	if(args.url.length > 256) return res({urlIllegal: true});
+	if(args.description.length > 100) return res({descriptionIllegal: true});
+	// check permission
+	args.id = args.id.toLowerCase();
+	User.checkPermission(conn, 'admin', function(r){
+		if(!r) return res({noPermission: true});
+		if(isAdd)
+			new (User(conn))(args).save(function(err){
+				if(err) return res({system: true});
+				res();
+			});
+		else
+			User(conn).update({id: args.id}, args, function(err){
+				if(err) return res({system: true});
+				res();
+			});
+	});
+};
+
+// admin: remove a user
+exports.remove = function(conn, res, args){
+	// filter data
+	args = formFilter(args, {
+		id: ''
+	});
+	if(!args.id.match(/^[-\w]{4,32}$/i)) return res({idIllegal: true});
+	// check permission
+	args.id = args.id.toLowerCase();
+	User.checkPermission(conn, 'admin', function(r){
+		if(!r) return res({noPermission: true});
+		User(conn).remove({id: args.id}, function(err){
+			if(err) return res({system: true});
+			res();
+		});
 	});
 };
