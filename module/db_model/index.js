@@ -6,7 +6,7 @@ var models = [
 	'site.js',
 	'user.js',
 	'settings.js',
-	//'post.js',
+	'post.js',
 	//'comment.js'
 ];
 

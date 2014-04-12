@@ -4,7 +4,7 @@
 var site = fw.module('db_model').Site;
 
 exports.global = {
-	lib: ['lib/jquery.js', 'lib/crypto.js'],
+	lib: ['/lib/crypto.js'],
 	main: 'global.js',
 	style: 'global',
 };

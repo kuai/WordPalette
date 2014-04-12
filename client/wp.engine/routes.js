@@ -5,6 +5,7 @@ if(fw.db) {
 	module.exports = {
 		engine: {
 			parent: 'global',
+			lib: '/lib/jquery.js',
 			main: 'main',
 			style: 'main',
 		},
