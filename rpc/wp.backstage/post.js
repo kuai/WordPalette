@@ -25,6 +25,22 @@ exports.create = function(conn, res, args){
 };
 
 // set blog settings
+exports.authorGet = function(conn, res, args){
+	args = formFilter(args, {
+		_id: ''
+	});
+	User.checkPermission(conn, 'contributor', function(r){
+		if(!r) return res({noPermission: true});
+		Post(conn).findOne(args, function(err, r){
+			if(err) return res({system: true});
+			if(r.author !== conn.session.userId)
+				return res({noPermission: true});
+			res(null, r);
+		});
+	});
+};
+
+// set blog settings
 exports.editorGet = function(conn, res, args){
 	args = formFilter(args, {
 		_id: ''

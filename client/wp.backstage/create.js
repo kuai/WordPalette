@@ -15,6 +15,7 @@ fw.main(function(pg){
 				$btns.removeAttr('disabled');
 				return;
 			}
+			$('#content').html(pg.parent.parent.tmpl.busy());
 			fw.go('/wp.backstage/post/' + id);
 		}, function(){
 			$btns.removeAttr('disabled');
