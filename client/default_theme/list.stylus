@@ -2,14 +2,16 @@
 .post_item
 	clear both
 	margin-top 20px
+	padding-bottom 10px
+	border-bottom dotted 1px
 .post_abstract
-	width 580px
-	background #ddd
-	float left
-	padding 0 20px
-	margin-top 20px
+	clear both
+	width 600px
+	padding 5px 0
+	margin 10px 0
+	font-family Bitter,Georgia,serif
 .post_abstract p img
-	width 560px
+	width 520px
 	margin 5px 10px
 .post_list_page
 	clear both
