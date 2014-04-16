@@ -3,10 +3,10 @@
 		<textarea id="{{tinymceId}}" name="content">{{content}}</textarea>
 	</div>
 	<div class="driver_abstract">
-		<select class="driver_abstract_enable" name="abstract_type">
-			<option value="auto" selected>`Auto-Generate Abstract`</option>
-			<option value="manual">`Use Manual Abstract`</option>
+		<select class="driver_abstract_enable" name="abstractType" value="{{abstractType}}">
+			<option value="auto">`First Paragraph as Abstract`</option>
+			<option value="manual">`Manual Abstract`</option>
 		</select>
-		<textarea class="driver_abstract_manual" name="abstract_manual" placeholder="`Abstract...`">{{abstract}}</textarea>
+		<textarea class="driver_abstract_manual" name="abstractManual" placeholder="`Abstract...`">{{abstract}}</textarea>
 	</div>
 </tmpl>

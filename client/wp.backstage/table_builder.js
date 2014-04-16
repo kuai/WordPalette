@@ -23,7 +23,7 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 
 	// build dom structure
 	var _ = wp.tableBuilder.i18n;
-	var $wrapper = $('<div><div class="wp_table_errors"></div><table cellpadding="0" cellspacing="0" border="0" class="wp_table"><thead></thead><tbody></tbody><tfoot></tfoot></table></div>').appendTo($div);
+	var $wrapper = $('<div><div class="errors"></div><table cellpadding="0" cellspacing="0" border="0" class="wp_table"><thead></thead><tbody></tbody><tfoot></tfoot></table></div>').appendTo($div);
 	var $table = $wrapper.children('table');
 	var $thead = $table.children('thead');
 	var $tbody = $table.children('tbody');
@@ -305,22 +305,6 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 		return this;
 	};
 
-	// show an error
-	var $errors = $wrapper.children('.wp_table_errors');
-	var showError = function(msg){
-		var $error = $('<div></div>').html(msg).appendTo($errors).slideDown(200);
-		var hidden = false;
-		var hide = function(){
-			if(hidden) return;
-			hidden = true;
-			$error.slideUp(200, function(){
-				$error.remove();
-			});
-		};
-		$error.click(hide);
-		setTimeout(hide, 10000);
-	};
-
 	// event binding funcs
 	var clickHandled = false;
 	var click = function(func){
@@ -351,7 +335,6 @@ wp.tableBuilder = function($div, options, colDefine, addDef){
 		set: set,
 		setPage: setPage,
 		setTotal: setTotal,
-		showError: showError,
 		enableAdd: enableAdd,
 		enableModify: enableModify,
 		click: click,

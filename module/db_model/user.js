@@ -16,7 +16,9 @@ var TYPEVAL = {
 var Schema = fw.db.Schema;
 var schemaObj = {
 	id: { type: String, index: true },
-	type: { type: String, index: true },
+	type: { type: String, index: true, enum: [
+		'disabled', 'reader', 'contributor', 'writer', 'editor', 'admin'
+	] },
 	displayName: String,
 	email: String,
 	url: { type: String, default: '' },
@@ -54,7 +56,7 @@ module.exports = function(model, next){
 						a.push(false);
 					else
 						a.push(TYPEVAL[r.type] >= TYPEVAL[type[i]]);
-				res.call(global, a);
+				res.apply(global, a);
 			}
 		});
 	};

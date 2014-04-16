@@ -4,6 +4,7 @@
 fw.main(function(pg){
 	var tmpl = pg.tmpl;
 	wp.tableBuilder.i18n = tmpl.i18n;
+	wp.backstage = {};
 
 	// create div structure
 	var wpVersion = fw.version;
@@ -28,6 +29,20 @@ fw.main(function(pg){
 		$('#backstage').height(document.documentElement.clientHeight);
 	});
 	$('#backstage').height(document.documentElement.clientHeight);
+
+	// show error
+	var $errors = $('#errors');
+	wp.backstage.showError = function(err){
+		var hidden = false;
+		if(typeof(err) === 'object') err = tmpl.error(err);
+		var $error = $('<div></div>').text(err).appendTo($errors).hide().fadeIn(200).click(function(){
+			if(hidden) return;
+			hidden = true;
+			$error.fadeOut(200, function(){
+				$error.remove();
+			});
+		});
+	};
 
 	// send an rpc to get the user's type
 	pg.rpc('user:current', function(info){

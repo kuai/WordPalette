@@ -20,6 +20,6 @@
 	};
 	wp.driverEditor = function(id, div, data){
 		if(drivers[id] && drivers[id].editor)
-			drivers[id].editor(div, data);
+			return drivers[id].editor(div, data);
 	};
 })();

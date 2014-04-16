@@ -15,7 +15,8 @@ fw.main(function(pg){
 			var $div = $(div).html(tmpl.main({
 				tinymceId: tinymceId,
 				content: data.content,
-				abstract: data.abstract
+				abstractManual: data.abstractManual,
+				abstractType: data.abstractType
 			}));
 			tinymce.init({
 				selector: '#' + tinymceId,
@@ -43,6 +44,27 @@ fw.main(function(pg){
 				if(enabled) $div.find('.driver_abstract_manual').fadeIn(200);
 				else $div.find('.driver_abstract_manual').fadeOut(200);
 			});
+
+			// events
+			return {
+				get: function(){
+					var content = tinymce.get(tinymceId).getContent();
+					if($div.find('.driver_abstract_enable').val() !== 'auto') {
+						// manual abstract
+						var ps = $div.find('.driver_abstract_manual').val().split(/[\r\n]+/g);
+						var abstract = '';
+						while(ps.length)
+							abstract += $('<p></p>').text(ps.shift()).prop('outerHTML');
+					} else {
+						// auto abstract
+						var abstract = $(content).eq(0).prop('outerHTML');
+					}
+					return {
+						content: content,
+						abstract: abstract
+					};
+				}
+			};
 
 		}
 	});

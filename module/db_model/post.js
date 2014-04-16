@@ -9,7 +9,9 @@ var schemaObj = {
 	type: String,
 	path: { type: String, default: '' },
 	title: { type: String, default: '' },
-	status: { type: String, default: 'draft' },
+	status: { type: String, default: 'draft', enum: [
+		'draft', 'pending', 'published'
+	] },
 	author: String,
 	time: { type: Number, index: true },
 	category: { type: [String], index: true, default: [] },

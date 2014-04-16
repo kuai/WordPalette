@@ -32,7 +32,7 @@ fw.main(function(pg){
 	.data(function(page){
 		pg.rpc('user:list', {from: page*USER_LIST_LEN, count: USER_LIST_LEN}, function(err, r){
 			if(err) {
-				table.showError(tmpl.error(err));
+				wp.backstage.showError(tmpl.error(err));
 				return;
 			}
 			table.setTotal(Math.ceil(r.total/USER_LIST_LEN));
@@ -43,7 +43,7 @@ fw.main(function(pg){
 			}
 			table.set(rows);
 		}, function(){
-			table.showError(tmpl.error({ timeout: true }));
+			wp.backstage.showError(tmpl.error({ timeout: true }));
 		});
 	})
 	.setPage(0, 1);
@@ -54,7 +54,7 @@ fw.main(function(pg){
 			data.password = CryptoJS.SHA256(data.id.toLowerCase() + '|' + data.password).toString();
 		pg.rpc('user:set', data, true, function(err){
 			if(err) {
-				table.showError(tmpl.error(err));
+				wp.backstage.showError(tmpl.error(err));
 				table.enableAdd();
 				return;
 			}
@@ -62,7 +62,7 @@ fw.main(function(pg){
 			data.password = '******';
 			table.addRow(data.id, data);
 		}, function(){
-			table.showError(tmpl.error({ timeout: true }));
+			wp.backstage.showError(tmpl.error({ timeout: true }));
 			table.enableAdd();
 		});
 	});
@@ -71,7 +71,7 @@ fw.main(function(pg){
 			data.password = CryptoJS.SHA256(data.id.toLowerCase() + '|' + data.password).toString();
 		pg.rpc('user:set', data, false, function(err){
 			if(err) {
-				table.showError(tmpl.error(err));
+				wp.backstage.showError(tmpl.error(err));
 				table.enableModify(data.id);
 				return;
 			}
@@ -79,20 +79,20 @@ fw.main(function(pg){
 			data.password = '******';
 			table.setRow(data.id, data);
 		}, function(){
-			table.showError(tmpl.error({ timeout: true }));
+			wp.backstage.showError(tmpl.error({ timeout: true }));
 			table.enableModify(data.id);
 		});
 	});
 	table.remove(function(id){
 		pg.rpc('user:remove', {id: id}, function(err){
 			if(err) {
-				table.showError(tmpl.error(err));
+				wp.backstage.showError(tmpl.error(err));
 				table.enableModify(data.id);
 				return;
 			}
 			table.removeRow(id);
 		}, function(){
-			table.showError(tmpl.error({ timeout: true }));
+			wp.backstage.showError(tmpl.error({ timeout: true }));
 			table.enableModify(data.id);
 		});
 	});
