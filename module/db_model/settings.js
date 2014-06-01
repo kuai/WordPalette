@@ -1,10 +1,12 @@
 // Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT
 'use strict';
 
+var COLLECTION = '.settings';
+
 // define schema
 var Schema = fw.db.Schema;
 var schemaObj = {
-	v: String,
+	v: Schema.Types.Mixed,
 	_id: String,
 };
 var schema = new Schema(schemaObj, {autoIndex: false});
@@ -13,30 +15,33 @@ var schema = new Schema(schemaObj, {autoIndex: false});
 schema.statics.get = function(key, cb){
 	this.findOne({_id: key}, function(err, res){
 		if(err) cb(err);
-		else cb(null, res && res.v);
+		else if(!res) cb(null);
+		else cb(null, res.v);
 	});
 };
 schema.statics.set = function(key, value, cb){
-	var model = this.model(COLLECTION);
-	this.findOne({_id: key}, function(err, res){
-		if(err) {
-			cb(err);
-			return;
-		}
-		if(res) {
-			res.v = value;
-			res.save(cb);
-		} else {
-			new model({
-				_id: key,
-				v: value
-			}).save(cb);
-		}
-	});
+	this.update({_id: key}, {v: value}, {upsert: true}, cb);
 };
 
-// register model
+// create models
 module.exports = function(model, next){
-	model.EngineSettings = fw.db.model(COLLECTION, schema);
-	model.EngineSettings.ensureIndexes(next);
+	var cols = {};
+	model.Settings = function(conn){
+		var site = conn.session.site || model.Site.cachedId(conn.host) || '';
+		return cols[site];
+	};
+
+	// build models
+	var c = model.siteList.length + 1;
+	var cb = function(){
+		c--;
+		if(!c) next();
+	};
+	for(var i=0; i<model.siteList.length; i++) {
+		var site = model.siteList[i];
+		var col = 'wp.' + site + COLLECTION;
+		cols[site] = fw.db.model(col, schema);
+		cols[site].ensureIndexes(cb);
+	}
+	cb();
 };

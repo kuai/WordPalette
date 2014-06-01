@@ -1,0 +1,82 @@
+/* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
+
+.settings_navi {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    max-width: 100px;
+    list-style: none;
+    padding: 0 10px 0 20px;
+    border-left: 1px dashed #888;
+    margin-left: 20px;
+    color: #666;
+}
+.settings_navi li {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+.settings_navi li:hover {
+    text-shadow: 0 0 1px #00a7cc;
+    color: #00a7cc;
+    cursor: pointer;
+}
+
+.settings {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    color: #444;
+    padding-right: 100px;
+    overflow: auto;
+}
+.settings_section {
+    margin-bottom: 3em;
+}
+.settings_title {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 0.5em;
+}
+.settings_form div {
+    margin: 0.75em 1em;
+}
+.settings_form label {
+    display: inline-block;
+    width: 10em;
+    text-align: right;
+    margin-right: 1em;
+}
+.settings_form input, .settings_form select, .settings_form textarea {
+    display: inline;
+    font-size: 1em;
+    border: 1px solid #bbb;
+    padding: 2px;
+    box-shadow: 0 0 2px #bbb;
+    vertical-align: middle;
+    width: 18em;
+}
+.settings_form select, .settings_form .submit, .settings_form .button {
+    width: auto;
+}
+.settings_form .submit, .settings_form .button {
+    display: block;
+    padding: 0.25em 1em;
+    border-radius: 10em;
+    margin: 1.25em 0 1.25em 12em;
+}
+.settings_form .submit {
+    border: 0 none;
+    background: #666;
+    box-shadow: 0 0 2px #666;
+    color: #fff;
+}
+.settings_form .submit:disabled {
+    background: #bbb;
+    box-shadow: 0 0 2px #bbb;
+}
+.settings_form .error {
+    margin-left: 13em;
+}

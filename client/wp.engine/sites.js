@@ -1,7 +1,7 @@
 // Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT
 'use strict';
 
-var pg = fw.getPage();
+fw.main(function(pg){
 var tmpl = pg.tmpl;
 
 var showMain = function(res){
@@ -65,4 +65,6 @@ pg.on('load', function(){
 			showMain(res);
 		});
 	});
+});
+
 });

@@ -1,7 +1,6 @@
 /* Copyright 2014 LastLeaf, LICENSE: github.lastleaf.me/MIT */
 
 body
-	margin 0
 	background #ddd
 #engine
 	width 400px
