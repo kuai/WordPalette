@@ -67,7 +67,7 @@ exports.get = function(conn, res, args){
 	User.checkPermission(conn, ['contributor', 'editor'], function(contributor, editor){
 		if(!contributor) return res({noPermission: true});
 		Post(conn).findOne(args, function(err, r){
-			if(err) return res({system: true});
+			if(err || !r) return res({notFound: true});
 			if(!editor && r.author !== conn.session.userId)
 				return res({noPermission: true});
 			res(null, r);
